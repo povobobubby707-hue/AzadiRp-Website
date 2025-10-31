@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azadi RolePlay | سرور SA-MP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* استایل‌های فوق پیشرفته */
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #2e86c1;
+            --accent-color: #f39c12;
+            --accent-dark: #e67e22;
+            --dark-color: #0d1218;
+            --darker-color: #080c10;
+            --light-color: #ecf0f1;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            --gradient-gold: linear-gradient(135deg, #ffd700, #ffa500, #ff8c00);
+            --gradient-premium: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            --neon-glow: 0 0 10px rgba(243, 156, 18, 0.7), 0 0 20px rgba(243, 156, 18, 0.5), 0 0 30px rgba(243, 156, 18, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--darker-color);
+            color: var(--light-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 82, 118, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(243, 156, 18, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(46, 134, 193, 0.1) 0%, transparent 30%);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 49%, rgba(243, 156, 18, 0.03) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(46, 134, 193, 0.03) 50%, transparent 51%);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* نوار ناوبری فوق پیشرفته */
+        .navbar {
+            background: rgba(13, 18, 24, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            padding: 1.3rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .navbar.scrolled {
+            padding: 0.9rem 0;
+            background: rgba(8, 12, 16, 0.95);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            font-size: 2rem;
+            font-weight: 800;
+            text-shadow: var(--neon-glow);
+            position: relative;
+            padding: 5px 15px;
+            border-radius: 10px;
+            background: rgba(243, 156, 18, 0.05);
+            border: 1px solid rgba(243, 156, 18, 0.2);
+        }
+        
+        .logo i {
+            margin-left: 12px;
+            font-size: 2.2rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 10px 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            right: 0;
+            background: var(--gradient-accent);
+            transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* بخش هیرو فوق پیشرفته */
+        .hero {
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(26, 82, 118, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(243, 156, 18, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(46, 134, 193, 0.4) 0%, transparent 50%),
+                linear-gradient(rgba(8, 12, 16, 0.85), rgba(13, 18, 24, 0.9)),
+                url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 65%, rgba(243, 156, 18, 0.05) 75%, transparent 85%),
+                linear-gradient(-45deg, transparent 65%, rgba(46, 134, 193, 0.05) 75%, transparent 85%);
+            animation: shine 8s infinite linear;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        
+        .hero-content h1 {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-shadow: 0 5px 25px rgba(0,0,0,0.7);
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .hero-content h1:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 5px;
+            background: var(--gradient-gold);
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: #f0f0f0;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .server-info {
+            background: rgba(255,255,255,0.08);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .server-info:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-premium);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+        
+        .server-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+        
+        .server-info p {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+        }
+        
+        .online-players {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(46, 204, 113, 0.15);
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-top: 1rem;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        .online-players i {
+            margin-left: 10px;
+            color: #2ecc71;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--gradient-premium);
+            color: white;
+            padding: 1.3rem 3.5rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--gradient-gold);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6), 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn:hover:before {
+            width: 100%;
+        }
+        
+        /* بخش‌های مختلف */
+        .section {
+            padding: 8rem 0;
+            position: relative;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(243, 156, 18, 0.3), transparent);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 6rem;
+            color: var(--light-color);
+            position: relative;
+            font-size: 3.2rem;
+            font-weight: 800;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 6px;
+            background: var(--gradient-premium);
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+        
+        /* بخش قوانین فوق پیشرفته */
+        .rules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 3rem;
+        }
+        
+        .rule-card {
+            background: rgba(255,255,255,0.07);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rule-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: var(--gradient-premium);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .rule-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .rule-card h3 i {
+            margin-left: 15px;
+            font-size: 2.2rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .rule-card p {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-right: 1.5rem;
+            color: #e8e8e8;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .rule-card p:before {
+            content: '•';
+            position: absolute;
+            right: 0;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+        
+        /* بخش دانلود فوق پیشرفته */
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .download-card {
+            background: rgba(255,255,255,0.07);
+            border-radius: 25px;
+            padding: 3.5rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--gradient-premium);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+        
+        .download-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .download-icon {
+            font-size: 5rem;
+            margin-bottom: 2.5rem;
+            background: var(--gradient-premium);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 15px rgba(102, 126, 234, 0.3));
+        }
+        
+        .download-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--light-color);
+            font-weight: 700;
+        }
+        
+        .download-card p {
+            margin-bottom: 3rem;
+            color: #d8d8d8;
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+        
+        .download-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #bdc3c7;
+            margin-top: 5px;
+        }
+        
+        /* گالری فوق پیشرفته */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+        
+        .gallery-item {
+            border-radius: 20px;
+            overflow: hidden;
+            height: 280px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(243, 156, 18, 0.3);
+            z-index: 10;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.2);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        /* انیمیشن‌های فوق پیشرفته */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(46, 204, 113, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(46, 204, 113, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(46, 204, 113, 0.2); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        
+        @keyframes shine {
+            0% { background-position: -100px 0; }
+            100% { background-position: 100px 0; }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(243, 156, 18, 0.8), 0 0 30px rgba(243, 156, 18, 0.6); }
+            100% { box-shadow: 0 0 10px rgba(243, 156, 18, 0.5); }
+        }
+        
+        /* فوتر فوق پیشرفته */
+        footer {
+            background: var(--darker-color);
+            color: var(--light-color);
+            padding: 6rem 0 2.5rem;
+            position: relative;
+        }
+        
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--gradient-premium);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 70%;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-section a {
+            color: #d8d8d8;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: inline-block;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-color);
+            padding-right: 15px;
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 2.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            margin-left: 15px;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 1.3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-links a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-premium);
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: 50%;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .social-links a:hover:before {
+            opacity: 1;
+        }
+        
+        .social-links a i {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            position: relative;
+        }
+        
+        .gold-team {
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+            padding: 10px 25px;
+            border-radius: 50px;
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);
+            animation: glow 3s infinite;
+        }
+        
+        /* ریسپانسیو */
+        @media (max-width: 1200px) {
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+                background: rgba(255,255,255,0.1);
+                padding: 10px 15px;
+                border-radius: 8px;
+                transition: all 0.3s;
+            }
+            
+            .mobile-menu-btn:hover {
+                background: rgba(255,255,255,0.2);
+            }
+            
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.5rem;
+            }
+            
+            .download-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .section {
+                padding: 6rem 0;
+            }
+        }
+        
+        /* اسکرول بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 14px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--darker-color);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-premium);
+            border-radius: 8px;
+            border: 3px solid var(--darker-color);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-gold);
+        }
+        
+        /* ذرات متحرک در پس‌زمینه */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- ذرات متحرک -->
+    <div class="particles" id="particles"></div>
+
+    <!-- نوار ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                Azadi RolePlay
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">خانه</a></li>
+                <li><a href="#about">درباره سرور</a></li>
+                <li><a href="#rules">قوانین</a></li>
+                <li><a href="#gallery">گالری</a></li>
+                <li><a href="#download">دانلود</a></li>
+                <li><a href="#contact">تماس با ما</a></li>
+            </ul>
+            <div class="mobile-menu-btn">☰</div>
+        </div>
+    </nav>
+
+    <!-- بخش اصلی -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Azadi RolePlay</h1>
+            <p>بهترین تجربه نقش‌آفرینی در SA-MP</p>
+            <div class="server-info">
+                <h2>آیپی سرور: 5.57.35.116:7777</h2>
+                <p>سرور SA-MP | لانچر اختصاصی به زودی</p>
+                <div class="online-players">
+                    <i class="fas fa-users"></i>
+                    <span>پلیرهای آنلاین: 12 | 100</span>
+                </div>
+            </div>
+            <a href="#download" class="btn">شروع بازی</a>
+        </div>
+    </section>
+
+    <!-- درباره سرور -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">درباره سرور ما</h2>
+            <div class="about-content">
+                <p style="text-align: center; max-width: 1000px; margin: 0 auto 5rem; font-size: 1.4rem; line-height: 1.9; color: #e8e8e8;">Azadi RolePlay یک سرور نقش‌آفرینی حرفه‌ای برای SA-MP است که با سیستم سمپ طراحی شده است. ما در این سرور تجربه‌ای منحصربه‌فرد از زندگی در یک شهر مجازی را برای شما فراهم کرده‌ایم. با سیستم‌های پیشرفته، اسکریپت‌های به‌روز و جامعه‌ای فعال، لحظات فراموش‌نشدنی را در دنیای نقش‌آفرینی تجربه کنید.</p>
+                
+                <div class="features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+                    <div style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.07); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); transition: all 0.6s;" class="feature-card">
+                        <i class="fas fa-users" style="font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.7rem;">جامعه فعال</h3>
+                        <p style="color: #d8d8d8; line-height: 1.8;">جامعه‌ای پرانرژی از بازیکنان حرفه‌ای و مدیریت فعال که همیشه در دسترس هستند</p>
+                    </div>
+                    <div style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.07); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); transition: all 0.6s;" class="feature-card">
+                        <i class="fas fa-shield-alt" style="font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.7rem;">آنتی چیت پیشرفته</h3>
+                        <p style="color: #d8d8d8; line-height: 1.8;">سیستم امنیتی قوی برای جلوگیری از تقلب و ایجاد محیطی عادلانه برای همه بازیکنان</p>
+                    </div>
+                    <div style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.07); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); transition: all 0.6s;" class="feature-card">
+                        <i class="fas fa-sync" style="font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.7rem;">آپدیت منظم</h3>
+                        <p style="color: #d8d8d8; line-height: 1.8;">بهبود مستمر سرور با آپدیت‌های منظم و اضافه شدن ویژگی‌های جدید و جذاب</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش قوانین -->
+    <section id="rules" class="section">
+        <div class="container">
+            <h2 class="section-title">قوانین سرور</h2>
+            <div class="rules-container">
+                <div class="rule-card">
+                    <h3><i class="fas fa-scroll"></i> قوانین عمومی</h3>
+                    <p>احترام به تمامی بازیکنان و ادمین‌ها الزامی است.</p>
+                    <p>هرگونه توهین، تبعیض نژادی و تحریک دیگران ممنوع است.</p>
+                    <p>استفاده از چیت، باگ و اکسپلویت ممنوع است.</p>
+                    <p>تبلیغ سرورهای دیگر ممنوع است.</p>
+                    <p>استفاده از نام‌های غیرمجاز و توهین‌آمیز ممنوع است.</p>
+                </div>
+                <div class="rule-card">
+                    <h3><i class="fas fa-car"></i> قوانین نقش‌آفرینی</h3>
+                    <p>نقش‌آفرینی باید منطبق با واقعیت باشد.</p>
+                    <p>فرار از نقش‌آفرینی (Fail RP) ممنوع است.</p>
+                    <p>قدرت‌نمایی (Power Gaming) ممنوع است.</p>
+                    <p>متاگیمینگ (Meta Gaming) ممنوع است.</p>
+                    <p>ایجاد صحنه‌های غیرمنطقی و غیرواقعی ممنوع است.</p>
+                </div>
+                <div class="rule-card">
+                    <h3><i class="fas fa-police-badge"></i> قوانین پلیس</h3>
+                    <p>پلیس باید طبق قوانین تعیین شده عمل کند.</p>
+                    <p>استفاده از وسایل پلیس فقط برای اعضای سازمان مجاز است.</p>
+                    <p>هرگونه سوءاستفاده از قدرت پلیس ممنوع است.</p>
+                    <p>پلیس باید در تمام تعاملات نقش‌آفرینی کند.</p>
+                    <p>پلیس باید در مواقع لازم از نیروی مناسب استفاده کند.</p>
+                </div>
+                <div class="rule-card">
+                    <h3><i class="fas fa-building"></i> قوانین سازمان‌ها</h3>
+                    <p>ایجاد سازمان فقط با اجازه ادمین‌ها امکان‌پذیر است.</p>
+                    <p>جنگ بین سازمان‌ها باید با هماهنگی ادمین‌ها باشد.</p>
+                    <p>رهبران سازمان مسئول اعضای خود هستند.</p>
+                    <p>هر سازمان باید حداقل 5 عضو فعال داشته باشد.</p>
+                    <p>سازمان‌ها باید قوانین سرور را به اعضا آموزش دهند.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش دانلود -->
+    <section id="download" class="section">
+        <div class="container">
+            <h2 class="section-title">دانلود و نصب</h2>
+            <p style="text-align: center; max-width: 1000px; margin: 0 auto 5rem; font-size: 1.4rem; color: #d8d8d8;">برای اتصال به سرور، نرم‌افزار مناسب دستگاه خود را دانلود و نصب کنید</p>
+            
+            <div class="download-options">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>نسخه کامپیوتر</h3>
+                    <p>مناسب برای کاربران ویندوز - شامل SA-MP کلاینت و پلاگین‌های ضروری برای تجربه‌ای کامل و بی‌نقص</p>
+                    <a href="#" class="btn">دانلود (2.1 GB)</a>
+                    <div class="download-stats">
+                        <div class="stat">
+                            <div class="stat-value">v2.4.1</div>
+                            <div class="stat-label">نسخه</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">4.9</div>
+                            <div class="stat-label">امتیاز</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>نسخه موبایل</h3>
+                    <p>مناسب برای اندروید و iOS - بهینه‌شده برای اجرا روی دستگاه‌های موبایل با کنترل‌های لمسی روان</p>
+                    <a href="#" class="btn">دانلود (1.3 GB)</a>
+                    <div class="download-stats">
+                        <div class="stat">
+                            <div class="stat-value">v1.8.2</div>
+                            <div class="stat-label">نسخه</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">4.7</div>
+                            <div class="stat-label">امتیاز</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>لانچر اختصاصی</h3>
+                    <p>اتصال آسان و سریع به سرور - به زودی در دسترس خواهد بود با ویژگی‌های منحصربه‌فرد</p>
+                    <a href="#" class="btn">اطلاع رسانی شو</a>
+                    <div class="download-stats">
+                        <div class="stat">
+                            <div class="stat-value">--</div>
+                            <div class="stat-label">نسخه</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">--</div>
+                            <div class="stat-label">امتیاز</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 6rem; background: rgba(255,255,255,0.07); padding: 3.5rem; border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12);">
+                <h3 style="text-align: center; margin-bottom: 2.5rem; color: var(--accent-color); font-size: 2rem;">راهنمای نصب و اتصال</h3>
+                <ol style="max-width: 800px; margin: 0 auto; padding-right: 2.5rem; font-size: 1.2rem;">
+                    <li style="margin-bottom: 1.5rem; padding: 1.2rem; background: rgba(0,0,0,0.2); border-radius: 12px; border-right: 4px solid var(--accent-color);">فایل مناسب دستگاه خود را دانلود کنید</li>
+                    <li style="margin-bottom: 1.5rem; padding: 1.2rem; background: rgba(0,0,0,0.2); border-radius: 12px; border-right: 4px solid var(--accent-color);">فایل را از حالت فشرده خارج کنید (در صورت نیاز)</li>
+                    <li style="margin-bottom: 1.5rem; padding: 1.2rem; background: rgba(0,0,0,0.2); border-radius: 12px; border-right: 4px solid var(--accent-color);">نرم‌افزار را نصب و اجرا کنید</li>
+                    <li style="margin-bottom: 1.5rem; padding: 1.2rem; background: rgba(0,0,0,0.2); border-radius: 12px; border-right: 4px solid var(--accent-color);">در قسمت کنسول بازی، دستور: <code style="background: rgba(0,0,0,0.4); padding: 6px 15px; border-radius: 8px; font-family: monospace; font-size: 1.1rem;">connect 5.57.35.116:7777</code> را وارد کنید</li>
+                    <li style="padding: 1.2rem; background: rgba(0,0,0,0.2); border-radius: 12px; border-right: 4px solid var(--accent-color);">از بازی لذت ببرید!</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- گالری -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2 class="section-title">گالری تصاویر</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="تصویر سرور">
+                    <div class="gallery-overlay">
+                        <h4>محیط شهری</h4>
+                        <p>شهر لس سانتوس با جزئیات بالا و محیطی پویا</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1531263407325-d52eccecf255?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="تصویر سرور">
+                    <div class="gallery-overlay">
+                        <h4>ماشین‌های شخصی</h4>
+                        <p>انواع وسایل نقلیه قابل خریداری و شخصی‌سازی</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="تصویر سرور">
+                    <div class="gallery-overlay">
+                        <h4>تعاملات نقش‌آفرینی</h4>
+                        <p>صحنه‌های واقعی از بازی بازیکنان و تعاملات اجتماعی</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1542751110-97427bbecf20?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="تصویر سرور">
+                    <div class="gallery-overlay">
+                        <h4>مأموریت‌های پلیس</h4>
+                        <p>عملیات‌های پلیس در سراسر شهر و تعقیب و گریزها</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تماس با ما -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">تماس با ما</h2>
+            <div class="contact-content" style="text-align: center; max-width: 1000px; margin: 0 auto;">
+                <p style="margin-bottom: 5rem; font-size: 1.4rem; color: #d8d8d8;">برای ارتباط با مدیریت سرور می‌توانید از راه‌های زیر استفاده کنید:</p>
+                <div class="contact-methods" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem;">
+                    <div style="padding: 3rem; background: rgba(255,255,255,0.07); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); transition: all 0.6s;" class="contact-card">
+                        <i class="fab fa-discord" style="font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.7rem;">دیسکورد</h3>
+                        <p style="color: #d8d8d8; font-size: 1.2rem;">discord.gg/azadip</p>
+                    </div>
+                    <div style="padding: 3rem; background: rgba(255,255,255,0.07); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); transition: all 0.6s;" class="contact-card">
+                        <i class="fab fa-instagram" style="font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.7rem;">اینستاگرام</h3>
+                        <p style="color: #d8d8d8; font-size: 1.2rem;">@AzadiRolePlay</p>
+                    </div>
+                    <div style="padding: 3rem; background: rgba(255,255,255,0.07); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); transition: all 0.6s;" class="contact-card">
+                        <i class="fab fa-telegram" style="font-size: 4rem; margin-bottom: 2rem; background: var(--gradient-premium); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3 style="color: var(--accent-color); margin-bottom: 2rem; font-size: 1.7rem;">تلگرام</h3>
+                        <p style="color: #d8d8d8; font-size: 1.2rem;">@AzadiRolePlay</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Azadi RolePlay</h3>
+                    <p style="color: #d8d8d8; line-height: 1.9; font-size: 1.1rem;">بهترین سرور نقش‌آفرینی ایرانی SA-MP با محیطی پویا و جامعه‌ای فعال. تجربه‌ای منحصربه‌فرد از زندگی در یک شهر مجازی با قوانین و سیستم‌های پیشرفته. به خانواده ما بپیوندید و لحظات فراموش‌نشدنی را تجربه کنید.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>لینک‌های مفید</h3>
+                    <ul>
+                        <li><a href="#home">خانه</a></li>
+                        <li><a href="#about">درباره سرور</a></li>
+                        <li><a href="#rules">قوانین</a></li>
+                        <li><a href="#download">دانلود</a></li>
+                        <li><a href="#contact">تماس با ما</a></li>
+                        <li><a href="#">پنل کاربری</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>اطلاعات سرور</h3>
+                    <p>آیپی: 5.57.35.116:7777</p>
+                    <p>نسخه: SA-MP 0.3.7</p>
+                    <p>وضعیت: <span style="color: #2ecc71; font-weight: 700;">آنلاین</span></p>
+                    <p>بازیکنان: <span style="color: var(--accent-color); font-weight: 700;">12/100</span></p>
+                    <p>پینگ: 32ms</p>
+                    <p>موقعیت: اروپا</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>کلیه حقوق محفوظ است © 2023 Azadi RolePlay | طراحی شده با ❤️ برای جامعه گیمینگ ایران</p>
+                <div class="gold-team">ساخته شده توسط Gold Team</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // اسکریپت برای منوی موبایل
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // اسکریپت برای اسکرول نرم
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // تغییر نوار ناوبری هنگام اسکرول
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+            
+            // انیمیشن برای عناصر هنگام اسکرول
+            const elements = document.querySelectorAll('.rule-card, .download-card, .gallery-item, .feature-card, .contact-card');
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.1;
+                
+                if(position < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // مقداردهی اولیه برای انیمیشن
+        document.querySelectorAll('.rule-card, .download-card, .gallery-item, .feature-card, .contact-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(50px)';
+            element.style.transition = 'opacity 0.8s, transform 0.8s';
+        });
+
+        // انیمیشن برای دکمه‌ها
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.animation = 'pulse 0.5s';
+            });
+            
+            btn.addEventListener('animationend', function() {
+                this.style.animation = '';
+            });
+        });
+
+        // ایجاد ذرات متحرک پیشرفته
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            const colors = [
+                'rgba(243, 156, 18, 0.8)',
+                'rgba(46, 134, 193, 0.8)',
+                'rgba(102, 126, 234, 0.8)',
+                'rgba(255, 215, 0, 0.8)',
+                'rgba(46, 204, 113, 0.8)'
+            ];
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // اندازه تصادفی
+                const size = Math.random() * 8 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // موقعیت تصادفی
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // رنگ تصادفی
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 ${size * 2}px ${color}`;
+                
+                // تاخیر انیمیشن تصادفی
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                
+                // مدت انیمیشن تصادفی
+                particle.style.animationDuration = `${Math.random() * 6 + 6}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // ایجاد ذرات هنگام لود صفحه
+        window.addEventListener('load', createParticles);
+    </script>
+</body>
+</html>
