@@ -3,1246 +3,1907 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azadi RolePlay | سرور نقش‌آفرینی GTA V</title>
+    <title>DevCode | خدمات حرفه‌ای سرور مجازی و میزبانی بازی</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a73e8;
-            --secondary: #34a853;
-            --accent: #fbbc05;
-            --dark: #0f0f1a;
-            --light: #f8f9fa;
-            --gray: #5f6368;
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --primary: #2563eb;
+            --secondary: #06b6d4;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #1e293b;
+            --gray-light: #334155;
+            --gradient: linear-gradient(135deg, #2563eb, #8b5cf6);
+            --gradient2: linear-gradient(135deg, #06b6d4, #3b82f6);
+            --gradient3: linear-gradient(135deg, #10b981, #06b6d4);
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 30px rgba(37, 99, 235, 0.3);
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Vazirmatn', sans-serif;
         }
-
+        
         body {
-            background-color: #0a0a12;
+            background: var(--dark);
             color: var(--light);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
-            background: radial-gradient(circle at 10% 20%, rgba(26, 115, 232, 0.1) 0%, transparent 20%),
-                        radial-gradient(circle at 90% 80%, rgba(52, 168, 83, 0.1) 0%, transparent 20%),
-                        radial-gradient(circle at 50% 50%, rgba(251, 188, 5, 0.05) 0%, transparent 50%),
-                        linear-gradient(135deg, #0a0a12 0%, #151528 50%, #0f0f1a 100%);
-            background-attachment: fixed;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
         }
-
-        /* Particles Background */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        /* Header Styles */
+        
+        /* Header */
         header {
-            background: rgba(10, 10, 18, 0.85);
-            backdrop-filter: blur(15px);
+            background: rgba(15, 23, 42, 0.95);
+            padding: 1.2rem 2rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: var(--transition);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
-
+        
         header.scrolled {
-            padding: 5px 0;
-            background: rgba(10, 10, 18, 0.95);
+            padding: 0.8rem 2rem;
+            background: rgba(15, 23, 42, 0.98);
         }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .nav-container {
+        
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-
+        
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            transition: transform 0.3s ease;
         }
-
+        
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+        
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: var(--gradient);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
-            animation: pulse 2s infinite;
+            box-shadow: var(--glow);
+            position: relative;
+            overflow: hidden;
         }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
+        
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
         }
-
+        
+        .logo:hover .logo-icon::before {
+            transform: translateX(100%);
+        }
+        
         .logo h1 {
             font-size: 1.8rem;
-            background: linear-gradient(to right, #fff, var(--accent));
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
         }
-
-        .nav-links {
+        
+        /* Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-toggle span {
+            width: 22px;
+            height: 2px;
+            background: var(--light);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 2.5rem;
         }
-
-        .nav-links li a {
+        
+        nav a {
             color: var(--light);
             text-decoration: none;
             font-weight: 500;
-            padding: 8px 0;
+            transition: all 0.3s ease;
             position: relative;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
         }
-
-        .nav-links li a::after {
+        
+        nav a:hover {
+            color: var(--secondary);
+            opacity: 1;
+        }
+        
+        nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
             right: 0;
             width: 0;
-            height: 3px;
+            height: 2px;
             background: var(--gradient);
-            border-radius: 3px;
-            transition: var(--transition);
+            transition: width 0.3s ease;
+            border-radius: 2px;
         }
-
-        .nav-links li a:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .nav-links li a:hover::after {
+        
+        nav a:hover::after {
             width: 100%;
         }
-
-        .nav-links li a.active {
-            color: var(--primary);
+        
+        .nav-btns {
+            display: flex;
+            gap: 1rem;
         }
-
-        .nav-links li a.active::after {
-            width: 100%;
-        }
-
-        .cta-button {
+        
+        .nav-btn {
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
+            padding: 0.8rem 1.8rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
             position: relative;
             overflow: hidden;
         }
-
-        .cta-button::before {
+        
+        .nav-btn::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: 0.5s;
         }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(26, 115, 232, 0.6);
-        }
-
-        .cta-button:hover::before {
+        
+        .nav-btn:hover::before {
             left: 100%;
         }
-
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+        
+        .nav-btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--light);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+        }
+        
+        .nav-btn-outline:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            transition: right 0.4s ease;
+            padding: 100px 2rem 2rem;
+            border-left: 1px solid var(--glass-border);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 1.2rem;
+        }
+        
+        .mobile-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .mobile-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+            color: var(--secondary);
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .auth-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .auth-content {
+            background: rgba(30, 41, 59, 0.95);
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+        
+        .close-auth {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .close-auth:hover {
+            opacity: 1;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background: var(--glass);
+            border-radius: 10px;
+            padding: 5px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background: var(--gradient);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        
+        .auth-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+        
         /* Hero Section */
         .hero {
-            padding: 180px 0 120px;
-            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            margin-top: 80px;
             position: relative;
             overflow: hidden;
         }
-
+        
         .hero-bg {
             position: absolute;
             top: 0;
-            right: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 20%, rgba(26, 115, 232, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(52, 168, 83, 0.15) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
             z-index: -1;
         }
-
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: var(--gradient);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+        
         .hero h2 {
-            font-size: 3.8rem;
-            margin-bottom: 25px;
-            background: linear-gradient(to right, #fff, var(--accent));
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-weight: 800;
-            line-height: 1.2;
+            line-height: 1.1;
+            text-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+            letter-spacing: -1px;
         }
-
+        
         .hero p {
-            font-size: 1.3rem;
-            max-width: 750px;
-            margin: 0 auto 40px;
-            color: #e8eaed;
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            font-weight: 300;
         }
-
-        .stats {
+        
+        .hero-btns {
             display: flex;
+            gap: 1.5rem;
             justify-content: center;
-            gap: 40px;
-            margin-top: 60px;
             flex-wrap: wrap;
+            margin-top: 3rem;
         }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            padding: 25px 35px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 200px;
-            transition: var(--transition);
+        
+        .btn {
+            padding: 1.3rem 2.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
             position: relative;
             overflow: hidden;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
         }
-
-        .stat-item::before {
+        
+        .btn::before {
             content: '';
             position: absolute;
             top: 0;
-            right: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(26, 115, 232, 0.1), rgba(52, 168, 83, 0.1));
-            opacity: 0;
-            transition: var(--transition);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.6s;
         }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        
+        .btn:hover::before {
+            left: 100%;
         }
-
-        .stat-item:hover::before {
-            opacity: 1;
+        
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
         }
-
-        .stat-item i {
-            font-size: 2.8rem;
-            color: var(--primary);
-            margin-bottom: 15px;
+        
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.5);
+        }
+        
+        /* Services Grid */
+        .services {
+            padding: 6rem 2rem;
+            background: var(--darker);
             position: relative;
-            z-index: 1;
         }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #bdc1c6;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Sections */
-        .section {
-            padding: 120px 0;
-        }
-
+        
         .section-title {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 4rem;
             position: relative;
         }
-
+        
         .section-title h2 {
-            font-size: 2.8rem;
-            display: inline-block;
-            position: relative;
-            padding-bottom: 20px;
+            font-size: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            margin-bottom: 1rem;
         }
-
-        .section-title h2::after {
+        
+        .section-title p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: var(--gray);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            right: 50%;
-            transform: translateX(50%);
-            width: 100px;
-            height: 5px;
-            background: var(--gradient);
-            border-radius: 3px;
-        }
-
-        /* Gallery Section */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 50px;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            height: 280px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .gallery-item img {
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.15);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-            padding: 25px;
-            transform: translateY(15px);
+            background: var(--gradient);
             opacity: 0;
-            transition: var(--transition);
+            transition: opacity 0.4s;
+            z-index: 0;
         }
-
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
-            opacity: 1;
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(37, 99, 235, 0.3);
         }
-
-        /* Shop Section */
-        .shop-categories {
+        
+        .service-card:hover::before {
+            opacity: 0.05;
+        }
+        
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+        
+        .service-card p {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Service Pages */
+        .service-page {
+            display: none;
+            padding: 120px 2rem 5rem;
+            min-height: 100vh;
+            background: var(--darker);
+        }
+        
+        .service-page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .back-btn {
+            background: var(--gray);
+            color: var(--light);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 3rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: var(--glass);
+            transform: translateX(-5px);
+        }
+        
+        .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
-
-        .category-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
+        
+        .pricing-card {
+            background: var(--gray);
             border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-            text-align: center;
-            padding: 40px 25px;
+            padding: 2.5rem 2rem;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
-
-        .category-card::before {
+        
+        .pricing-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
             opacity: 0;
-            transition: var(--transition);
+            transition: opacity 0.4s;
+            z-index: 0;
         }
-
-        .category-card:hover {
-            transform: translateY(-15px);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(37, 99, 235, 0.3);
         }
-
-        .category-card:hover::before {
-            opacity: 1;
+        
+        .pricing-card:hover::before {
+            opacity: 0.05;
         }
-
-        .category-icon {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
-            color: var(--primary);
+        
+        .location-badge {
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
             position: relative;
             z-index: 1;
         }
-
-        .category-card h3 {
-            font-size: 1.7rem;
-            margin-bottom: 20px;
+        
+        .pricing-name {
+            font-size: 1.4rem;
+            color: var(--light);
+            margin-bottom: 1rem;
             position: relative;
             z-index: 1;
+            font-weight: 700;
         }
-
-        .category-card p {
-            color: #bdc1c6;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Forum Section */
-        .forum-preview {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border-radius: 16px;
-            padding: 40px;
-            margin-top: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .forum-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 25px;
-        }
-
-        .forum-stat {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            min-width: 150px;
-            transition: var(--transition);
-        }
-
-        .forum-stat:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .forum-stat-value {
+        
+        .pricing-price {
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--accent);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
-
-        .forum-stat-label {
-            color: #bdc1c6;
-            font-size: 1.1rem;
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 1;
         }
-
-        .recent-threads {
-            margin-top: 40px;
-        }
-
-        .thread {
+        
+        .pricing-features li {
+            padding: 0.8rem 0;
+            color: #94a3b8;
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
-            justify-content: space-between;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
+            align-items: center;
+            gap: 0.8rem;
         }
-
-        .thread:hover {
-            background: rgba(255, 255, 255, 0.05);
-            padding-right: 15px;
-            border-radius: 8px;
-        }
-
-        .thread:last-child {
+        
+        .pricing-features li:last-child {
             border-bottom: none;
         }
-
-        .thread-info {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+        
+        .pricing-features li i {
+            color: var(--success);
+            font-size: 1.1rem;
         }
-
-        .thread-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient);
+        
+        /* Purchase Modal */
+        .purchase-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+        }
+        
+        .purchase-modal.active {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s ease;
         }
-
-        .thread-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .thread-meta {
-            color: #bdc1c6;
-            font-size: 0.95rem;
-            margin-top: 5px;
-        }
-
-        /* Download Section */
-        .download-section {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
+        
+        .purchase-content {
+            background: rgba(30, 41, 59, 0.95);
+            padding: 3rem;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
             position: relative;
-            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
         }
-
-        .download-section::before {
-            content: '';
+        
+        .close-purchase {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(26, 115, 232, 0.1) 0%, transparent 70%);
-            opacity: 0.5;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
-
-        .download-icon {
-            font-size: 6rem;
-            color: var(--primary);
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-            animation: bounce 2s infinite;
+        
+        .close-purchase:hover {
+            opacity: 1;
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
+        
+        .purchase-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
         }
-
-        .download-section h3 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
+        
+        .purchase-header h3 {
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
-
-        .download-section p {
-            color: #bdc1c6;
-            margin-bottom: 40px;
+        
+        .purchase-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .form-group label {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+        }
+        
+        .purchase-summary {
+            background: var(--glass);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
             font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
+            color: var(--secondary);
         }
-
+        
+        .purchase-submit {
+            width: 100%;
+            padding: 1.3rem;
+            background: var(--gradient);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+        
+        .purchase-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+        }
+        
         /* Footer */
         footer {
-            background: rgba(5, 5, 10, 0.95);
-            padding: 80px 0 40px;
-            margin-top: 80px;
+            background: var(--darker);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--glass-border);
             position: relative;
         }
-
+        
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 50px;
-            margin-bottom: 50px;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
+        
         .footer-column h3 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
         }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
+        
         .footer-links {
             list-style: none;
         }
-
+        
         .footer-links li {
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
-
+        
         .footer-links a {
-            color: #bdc1c6;
+            color: #94a3b8;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.8rem;
         }
-
+        
         .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(-5px);
+            color: var(--secondary);
+            transform: translateX(5px);
         }
-
+        
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
-
-        .social-link {
+        
+        .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 45px;
             height: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass);
+            border-radius: 10px;
             color: white;
-            transition: var(--transition);
-            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
         }
-
-        .social-link:hover {
-            background: var(--primary);
-            transform: translateY(-5px) rotate(10deg);
-            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+        
+        .social-links a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
-
+        
         .copyright {
             text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bdc1c6;
-            font-size: 0.95rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: #64748b;
+            font-size: 0.9rem;
         }
-
+        
         /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
             }
         }
-
-        .fade-in {
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
         }
-
-        .delay-1 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.4s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.6s;
-        }
-
+        
         /* Responsive */
-        @media (max-width: 1200px) {
-            .hero h2 {
-                font-size: 3.2rem;
+        @media (max-width: 968px) {
+            .menu-toggle {
+                display: flex;
             }
-        }
-
-        @media (max-width: 992px) {
-            .nav-links {
-                gap: 20px;
+            
+            nav ul {
+                display: none;
             }
             
             .hero h2 {
-                font-size: 2.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.4rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .nav-links {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero {
-                padding: 200px 0 100px;
-            }
-            
-            .hero h2 {
-                font-size: 2.4rem;
-            }
-            
-            .stats {
-                gap: 25px;
-            }
-            
-            .stat-item {
-                min-width: 160px;
-                padding: 20px 25px;
-            }
-            
-            .section {
-                padding: 100px 0;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h2 {
-                font-size: 2rem;
+                font-size: 3rem;
             }
             
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             
             .section-title h2 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
-            .gallery {
+            .purchase-form {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            .hero {
+                padding: 0 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                padding: 1.1rem 2.2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .services-grid {
                 grid-template-columns: 1fr;
             }
             
-            .shop-categories {
+            .pricing-grid {
                 grid-template-columns: 1fr;
             }
             
-            .forum-stats {
-                gap: 15px;
-            }
-            
-            .forum-stat {
-                min-width: 120px;
-                padding: 15px;
-            }
-            
-            .download-section {
-                padding: 40px 20px;
-            }
-            
-            .download-icon {
-                font-size: 4.5rem;
+            .auth-content,
+            .purchase-content {
+                padding: 2rem;
+                margin: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
-
     <!-- Header -->
-    <header id="header">
-        <div class="container">
-            <div class="nav-container">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <h1>Azadi RolePlay</h1>
+    <header id="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-server" style="color: white; font-size: 1.3rem;"></i>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#home" class="active"><i class="fas fa-home"></i> صفحه اصلی</a></li>
-                    <li><a href="#about"><i class="fas fa-info-circle"></i> درباره سرور</a></li>
-                    <li><a href="#gallery"><i class="fas fa-images"></i> گالری</a></li>
-                    <li><a href="#shop"><i class="fas fa-shopping-cart"></i> فروشگاه</a></li>
-                    <li><a href="#forum"><i class="fas fa-comments"></i> انجمن</a></li>
-                    <li><a href="#download"><i class="fas fa-download"></i> دانلود</a></li>
+                <h1>DevCode</h1>
+            </div>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul class="desktop-nav">
+                    <li><a href="#home">خانه</a></li>
+                    <li><a href="#services">خدمات</a></li>
+                    <li><a href="#contact">تماس با ما</a></li>
                 </ul>
-                <button class="cta-button">شروع بازی</button>
+            </nav>
+            
+            <div class="nav-btns">
+                <button class="nav-btn nav-btn-outline" onclick="showAuthModal('login')">ورود</button>
+                <button class="nav-btn" onclick="showAuthModal('register')">ثبت نام</button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="container">
-            <h2 class="fade-in">به Azadi RolePlay خوش آمدید</h2>
-            <p class="fade-in delay-1">تجربه‌ای بی‌نظیر از نقش‌آفرینی در دنیای GTA V با قوانین منحصربه‌فرد، اقتصاد پویا و جامعه‌ای فعال از بازیکنان</p>
-            <button class="cta-button fade-in delay-2">همین حالا بپیوندید</button>
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-content">
+            <button class="close-auth" onclick="hideAuthModal()">&times;</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">ورود</button>
+                <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">ثبت نام</button>
+            </div>
             
-            <div class="stats">
-                <div class="stat-item fade-in delay-1">
-                    <i class="fas fa-users"></i>
-                    <div class="stat-value" id="online-players">16</div>
-                    <div class="stat-label">بازیکنان آنلاین</div>
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">ایمیل</label>
+                    <input type="email" id="loginEmail" placeholder="example@devcode.ir" required>
                 </div>
-                <div class="stat-item fade-in delay-2">
-                    <i class="fas fa-server"></i>
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">آپ‌تایم سرور</div>
+                <div class="form-group">
+                    <label for="loginPassword">رمز عبور</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
                 </div>
-                <div class="stat-item fade-in delay-3">
-                    <i class="fas fa-user-shield"></i>
-                    <div class="stat-value">100+</div>
-                    <div class="stat-label">استاف فعال</div>
+                <button type="submit" class="auth-submit">ورود به حساب</button>
+            </form>
+            
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">نام کامل</label>
+                    <input type="text" id="registerName" placeholder="محمد محمدی" required>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="registerEmail">ایمیل</label>
+                    <input type="email" id="registerEmail" placeholder="example@devcode.ir" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">رمز عبور</label>
+                    <input type="password" id="registerPassword" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">تکرار رمز عبور</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="auth-submit">ایجاد حساب</button>
+            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>درباره سرور ما</h2>
+    <!-- Purchase Modal -->
+    <div class="purchase-modal" id="purchaseModal">
+        <div class="purchase-content">
+            <button class="close-purchase" onclick="hidePurchaseModal()">&times;</button>
+            <div class="purchase-header">
+                <h3 id="purchaseTitle">خرید سرور مجازی</h3>
+                <p style="color: #94a3b8;">لطفا اطلاعات خود را وارد کنید</p>
             </div>
-            <div class="about-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px;">
-                <div class="about-item" style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); transition: var(--transition);">
-                    <i class="fas fa-gem" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
-                    <h3 style="margin-bottom: 20px; font-size: 1.5rem;">تجربه نقش‌آفرینی منحصربه‌فرد</h3>
-                    <p style="color: #bdc1c6; line-height: 1.8;">در Azadi RolePlay، شما فرصت ساختن داستان شخصی خود را دارید. از یک شهروند عادی تا یک تاجر موفق یا حتی یک مأمور قانون.</p>
+            
+            <form id="purchaseForm">
+                <div class="purchase-form">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nationalCode">کد ملی</label>
+                            <input type="text" id="nationalCode" placeholder="0012345678" required maxlength="10">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phoneNumber">شماره تماس</label>
+                            <input type="tel" id="phoneNumber" placeholder="09123456789" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">ایمیل</label>
+                            <input type="email" id="email" placeholder="example@devcode.ir" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="postalCode">کد پستی</label>
+                            <input type="text" id="postalCode" placeholder="1234567890" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="usageType">مورد مصرف</label>
+                            <select id="usageType" required>
+                                <option value="">انتخاب کنید</option>
+                                <option value="web">وب‌سایت و برنامه‌نویسی</option>
+                                <option value="gaming">سرور بازی</option>
+                                <option value="storage">ذخیره‌سازی اطلاعات</option>
+                                <option value="development">توسعه و تست</option>
+                                <option value="other">سایر</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="serverLocation">موقعیت سرور</label>
+                            <select id="serverLocation" required>
+                                <option value="">انتخاب کنید</option>
+                                <option value="iran">ایران</option>
+                                <option value="germany">آلمان</option>
+                                <option value="sweden">سوئد</option>
+                                <option value="netherlands">هلند</option>
+                                <option value="usa">آمریکا</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="extraHDD">هارد اضافه</label>
+                            <select id="extraHDD">
+                                <option value="0">بدون هارد اضافه</option>
+                                <option value="50">+50GB (50,000 تومان)</option>
+                                <option value="100">+100GB (80,000 تومان)</option>
+                                <option value="200">+200GB (150,000 تومان)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="extraRAM">رم اضافه</label>
+                            <select id="extraRAM">
+                                <option value="0">بدون رم اضافه</option>
+                                <option value="2">+2GB (40,000 تومان)</option>
+                                <option value="4">+4GB (70,000 تومان)</option>
+                                <option value="8">+8GB (120,000 تومان)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group-full">
+                        <label for="dedicatedPort">پورت اختصاصی</label>
+                        <select id="dedicatedPort">
+                            <option value="0">پورت استاندارد</option>
+                            <option value="1">پورت اختصاصی 1Gbps (100,000 تومان)</option>
+                            <option value="10">پورت اختصاصی 10Gbps (500,000 تومان)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group-full">
+                        <label for="additionalNotes">توضیحات اضافی</label>
+                        <textarea id="additionalNotes" placeholder="در صورت نیاز توضیحات بیشتری وارد کنید..."></textarea>
+                    </div>
                 </div>
-                <div class="about-item" style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); transition: var(--transition);">
-                    <i class="fas fa-coins" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
-                    <h3 style="margin-bottom: 20px; font-size: 1.5rem;">اقتصاد پویا</h3>
-                    <p style="color: #bdc1c6; line-height: 1.8;">سیستم اقتصادی کاملاً یکپارچه که به شما امکان می‌دهد کسب‌وکار خود را راه‌اندازی کنید، معاملات تجاری انجام دهید و ثروت خود را افزایش دهید.</p>
+                
+                <div class="purchase-summary">
+                    <h4 style="color: var(--light); margin-bottom: 1rem; text-align: center;">خلاصه سفارش</h4>
+                    <div class="summary-item">
+                        <span>هزینه پایه:</span>
+                        <span id="basePrice">0 تومان</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>هارد اضافه:</span>
+                        <span id="hddPrice">0 تومان</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>رم اضافه:</span>
+                        <span id="ramPrice">0 تومان</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>پورت اختصاصی:</span>
+                        <span id="portPrice">0 تومان</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>جمع کل:</span>
+                        <span id="totalPrice">0 تومان</span>
+                    </div>
                 </div>
-                <div class="about-item" style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); transition: var(--transition);">
-                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
-                    <h3 style="margin-bottom: 20px; font-size: 1.5rem;">آنتی‌چیت پیشرفته</h3>
-                    <p style="color: #bdc1c6; line-height: 1.8;">با سیستم آنتی‌چیت پیشرفته، محیطی عادلانه و بدون تقلب برای همه بازیکنان فراهم کرده‌ایم.</p>
-                </div>
-            </div>
+                
+                <button type="submit" class="purchase-submit">
+                    <i class="fas fa-shopping-cart"></i>
+                    تکمیل خرید و پرداخت
+                </button>
+            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Gallery Section -->
-    <section class="section" id="gallery" style="background: rgba(0,0,0,0.3);">
-        <div class="container">
-            <div class="section-title">
-                <h2>گالری تصاویر</h2>
-            </div>
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1057&q=80" alt="GTA V RolePlay Scene">
-                    <div class="gallery-overlay">
-                        <h3>صحنه‌ای از شهر</h3>
-                        <p>لس سانتوس در شب</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1532245128003-3db26c5b7acd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1050&q=80" alt="GTA V RolePlay Scene">
-                    <div class="gallery-overlay">
-                        <h3>تعامل پلیس</h3>
-                        <p>ماموران در حال گشت‌زنی</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1050&q=80" alt="GTA V RolePlay Scene">
-                    <div class="gallery-overlay">
-                        <h3>زندگی شهری</h3>
-                        <p>فعالیت‌های روزمره بازیکنان</p>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1050&q=80" alt="GTA V RolePlay Scene">
-                    <div class="gallery-overlay">
-                        <h3>وسایل نقلیه</h3>
-                        <p>مجموعه‌ای از خودروهای قابل استفاده</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#home" onclick="hideMobileMenu()"><i class="fas fa-home"></i> خانه</a></li>
+            <li><a href="#services" onclick="hideMobileMenu()"><i class="fas fa-concierge-bell"></i> خدمات</a></li>
+            <li><a href="#" onclick="showService('vps'); hideMobileMenu()"><i class="fas fa-cloud"></i> سرور مجازی</a></li>
+            <li><a href="#" onclick="showService('samp'); hideMobileMenu()"><i class="fas fa-gamepad"></i> خدمات SAMP</a></li>
+            <li><a href="#" onclick="showService('mta'); hideMobileMenu()"><i class="fas fa-car"></i> خدمات MTA</a></li>
+            <li><a href="#" onclick="showService('gaming'); hideMobileMenu()"><i class="fas fa-trophy"></i> سرور گیمینگ</a></li>
+            <li><a href="#" onclick="showService('teamspeak'); hideMobileMenu()"><i class="fas fa-headset"></i> تیم اسپیک</a></li>
+            <li><a href="#" onclick="showService('antiddos'); hideMobileMenu()"><i class="fas fa-shield-alt"></i> آنتی DDOS</a></li>
+            <li><a href="#" onclick="showService('ticket'); hideMobileMenu()"><i class="fas fa-ticket-alt"></i> تیکت پشتیبانی</a></li>
+            <li><a href="#contact" onclick="hideMobileMenu()"><i class="fas fa-phone"></i> تماس با ما</a></li>
+        </ul>
+    </div>
+    
+    <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- Shop Section -->
-    <section class="section" id="shop">
-        <div class="container">
-            <div class="section-title">
-                <h2>فروشگاه سرور</h2>
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-bg"></div>
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
             </div>
-            <div class="shop-categories">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Money</h3>
-                    <p>خرید پول درون بازی برای پیشرفت سریع‌تر</p>
-                    <button class="cta-button" style="padding: 10px 25px; font-size: 1rem; position: relative; z-index: 1;">خرید</button>
+            <div class="hero-content">
+                <h2>خدمات حرفه‌ای هاستینگ و سرور</h2>
+                <p>با زیرساخت قدرتمند و پشتیبانی 24/7، تجربه‌ای بی‌نظیر از میزبانی سرورهای بازی و برنامه‌های تحت وب داشته باشید. سرعت، امنیت و پایداری در بالاترین سطح.</p>
+                <div class="hero-btns">
+                    <a href="#services" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        مشاهده خدمات
+                    </a>
+                    <a href="#" onclick="showService('vps')" class="btn btn-secondary">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </a>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-coins"></i>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="section-title">
+                <h2>خدمات ما</h2>
+                <p>خدمات متنوع و حرفه‌ای برای نیازهای مختلف شما</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" onclick="showService('vps')">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud"></i>
                     </div>
-                    <h3>ACoin</h3>
-                    <p>ارز ویژه سرور برای خرید آیتم‌های خاص</p>
-                    <button class="cta-button" style="padding: 10px 25px; font-size: 1rem; position: relative; z-index: 1;">خرید</button>
+                    <h3>سرور مجازی (VPS)</h3>
+                    <p>سرورهای پرسرعت با سخت‌افزار قدرتمند برای میزبانی برنامه‌های تحت وب و اپلیکیشن‌ها</p>
+                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-crown"></i>
+                
+                <div class="service-card" onclick="showService('samp')">
+                    <div class="service-icon">
+                        <i class="fas fa-gamepad"></i>
                     </div>
-                    <h3>Prime (VIP)</h3>
-                    <p>عضویت ویژه با امتیازات انحصاری</p>
-                    <button class="cta-button" style="padding: 10px 25px; font-size: 1rem; position: relative; z-index: 1;">خرید</button>
+                    <h3>خدمات SAMP</h3>
+                    <p>میزبانی تخصصی سرورهای San Andreas Multiplayer با کمترین پینگ و بالاترین پایداری</p>
+                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <h3>Skin</h3>
-                    <p>پوست‌ها و استایل‌های منحصربه‌فرد</p>
-                    <button class="cta-button" style="padding: 10px 25px; font-size: 1rem; position: relative; z-index: 1;">خرید</button>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
+                
+                <div class="service-card" onclick="showService('mta')">
+                    <div class="service-icon">
                         <i class="fas fa-car"></i>
                     </div>
-                    <h3>Vehicle</h3>
-                    <p>وسایل نقلیه خاص و منحصربه‌فرد</p>
-                    <button class="cta-button" style="padding: 10px 25px; font-size: 1rem; position: relative; z-index: 1;">خرید</button>
+                    <h3>خدمات MTA</h3>
+                    <p>سرورهای Multi Theft Auto با امکانات کامل و پشتیبانی تخصصی برای جامعه بازی</p>
+                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                </div>
+
+                <div class="service-card" onclick="showService('gaming')">
+                    <div class="service-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>سرور اختصاصی گیم</h3>
+                    <p>سرورهای قدرتمند مخصوص بازی‌های آنلاین با پینگ پایین و عملکرد فوق‌العاده</p>
+                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                </div>
+
+                <div class="service-card" onclick="showService('teamspeak')">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>سرور تیم اسپیک</h3>
+                    <p>میزبانی سرورهای TeamSpeak با کیفیت صدای عالی برای تیم‌های گیمینگ</p>
+                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                </div>
+
+                <div class="service-card" onclick="showService('antiddos')">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>حفاظت آنتی DDOS</h3>
+                    <p>سیستم‌های پیشرفته حفاظت در برابر حملات سایبری با مانیتورینگ 24/7</p>
+                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 50px;">
-                <p style="color: #bdc1c6; font-size: 1.1rem;">درگاه پرداخت به زودی فعال خواهد شد</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Forum Section -->
-    <section class="section" id="forum" style="background: rgba(0,0,0,0.3);">
-        <div class="container">
+    <!-- Service Pages -->
+    <div id="service-pages">
+        <!-- VPS Service -->
+        <section id="vps-page" class="service-page">
+            <button class="back-btn" onclick="showMain()">
+                <i class="fas fa-arrow-right"></i>
+                بازگشت به صفحه اصلی
+            </button>
+            
             <div class="section-title">
-                <h2>انجمن جامعه</h2>
+                <h2>سرور مجازی (VPS)</h2>
+                <p>سرورهای مجازی پرسرعت با سخت‌افزار قدرتمند در دیتاسنترهای مختلف</p>
             </div>
-            <div class="forum-preview">
-                <div class="forum-stats">
-                    <div class="forum-stat">
-                        <div class="forum-stat-value">1,254</div>
-                        <div class="forum-stat-label">تاپیک‌ها</div>
-                    </div>
-                    <div class="forum-stat">
-                        <div class="forum-stat-value">5,892</div>
-                        <div class="forum-stat-label">پست‌ها</div>
-                    </div>
-                    <div class="forum-stat">
-                        <div class="forum-stat-value">842</div>
-                        <div class="forum-stat-label">کاربران</div>
-                    </div>
-                    <div class="forum-stat">
-                        <div class="forum-stat-value">32</div>
-                        <div class="forum-stat-label">آنلاین</div>
-                    </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="location-badge">ایران</div>
+                    <div class="pricing-name">پایه - ایران</div>
+                    <div class="pricing-price">۱۹۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 2 هسته CPU</li>
+                        <li><i class="fas fa-check"></i> 4GB RAM</li>
+                        <li><i class="fas fa-check"></i> 50GB NVMe</li>
+                        <li><i class="fas fa-check"></i> 1TB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 30ms</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی پایه - ایران', 190000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
                 </div>
                 
-                <div class="recent-threads">
-                    <h3 style="margin-bottom: 25px; font-size: 1.5rem;">آخرین بحث‌ها</h3>
-                    <div class="thread">
-                        <div class="thread-info">
-                            <div class="thread-avatar">MA</div>
-                            <div>
-                                <div class="thread-title">بهترین ماشین برای شروع بازی کدام است؟</div>
-                                <div class="thread-meta">توسط MohammadA, 2 ساعت پیش</div>
-                            </div>
-                        </div>
-                        <div class="thread-stats">
-                            <div class="thread-meta">15 پاسخ</div>
-                        </div>
-                    </div>
-                    <div class="thread">
-                        <div class="thread-info">
-                            <div class="thread-avatar">AR</div>
-                            <div>
-                                <div class="thread-title">راهنمای کامل کسب‌وکارهای جدید</div>
-                                <div class="thread-meta">توسط AliR, 5 ساعت پیش</div>
-                            </div>
-                        </div>
-                        <div class="thread-stats">
-                            <div class="thread-meta">28 پاسخ</div>
-                        </div>
-                    </div>
-                    <div class="thread">
-                        <div class="thread-info">
-                            <div class="thread-avatar">SN</div>
-                            <div>
-                                <div class="thread-title">بررسی آپدیت جدید سرور - نسخه 2.4</div>
-                                <div class="thread-meta">توسط ServerNews, 1 روز پیش</div>
-                            </div>
-                        </div>
-                        <div class="thread-stats">
-                            <div class="thread-meta">42 پاسخ</div>
-                        </div>
-                    </div>
+                <div class="pricing-card">
+                    <div class="location-badge">آلمان</div>
+                    <div class="pricing-name">حرفه‌ای - آلمان</div>
+                    <div class="pricing-price">۳۵۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 4 هسته CPU</li>
+                        <li><i class="fas fa-check"></i> 8GB RAM</li>
+                        <li><i class="fas fa-check"></i> 100GB NVMe</li>
+                        <li><i class="fas fa-check"></i> 2TB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 120ms</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی حرفه‌ای - آلمان', 350000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
                 </div>
                 
-                <div style="text-align: center; margin-top: 40px;">
-                    <button class="cta-button">ورود به انجمن</button>
+                <div class="pricing-card">
+                    <div class="location-badge">سوئد</div>
+                    <div class="pricing-name">سازمانی - سوئد</div>
+                    <div class="pricing-price">۵۵۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 8 هسته CPU</li>
+                        <li><i class="fas fa-check"></i> 16GB RAM</li>
+                        <li><i class="fas fa-check"></i> 200GB NVMe</li>
+                        <li><i class="fas fa-check"></i> 5TB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 150ms</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی سازمانی - سوئد', 550000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Download Section -->
-    <section class="section" id="download">
-        <div class="container">
+                <div class="pricing-card">
+                    <div class="location-badge">هلند</div>
+                    <div class="pricing-name">پیشرفته - هلند</div>
+                    <div class="pricing-price">۴۵۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 6 هسته CPU</li>
+                        <li><i class="fas fa-check"></i> 12GB RAM</li>
+                        <li><i class="fas fa-check"></i> 150GB NVMe</li>
+                        <li><i class="fas fa-check"></i> 3TB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 130ms</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی پیشرفته - هلند', 450000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAMP Service -->
+        <section id="samp-page" class="service-page">
+            <button class="back-btn" onclick="showMain()">
+                <i class="fas fa-arrow-right"></i>
+                بازگشت به صفحه اصلی
+            </button>
+            
             <div class="section-title">
-                <h2>دانلود لانچر</h2>
+                <h2>خدمات سرور SAMP</h2>
+                <p>میزبانی تخصصی سرورهای San Andreas Multiplayer با بهترین کیفیت</p>
             </div>
-            <div class="download-section">
-                <div class="download-icon">
-                    <i class="fas fa-download"></i>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">سرور SAMP پایه</div>
+                    <div class="pricing-price">۱۰۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 50 اسلات بازیکن</li>
+                        <li><i class="fas fa-check"></i> 1GB RAM اختصاصی</li>
+                        <li><i class="fas fa-check"></i> 500GB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پشتیبانی 24/7</li>
+                        <li><i class="fas fa-check"></i> مدت: 1 ماهه</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور SAMP پایه', 100000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
                 </div>
-                <h3>لانچر مخصوص Azadi RolePlay</h3>
-                <p>برای اتصال به سرور و تجربه کامل نقش‌آفرینی، لانچر مخصوص سرور را دانلود و نصب کنید.</p>
-                <button class="cta-button" id="download-launcher" style="padding: 15px 50px; font-size: 1.2rem;">دانلود لانچر (1.2 GB)</button>
-                <div style="margin-top: 25px; color: #bdc1c6;">
-                    <p>نسخه: 2.4.1 | آخرین بروزرسانی: ۱۴۰۲/۰۵/۱۵</p>
+                
+                <div class="pricing-card">
+                    <div class="pricing-name">سرور SAMP حرفه‌ای</div>
+                    <div class="pricing-price">۳۰۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 500 اسلات بازیکن</li>
+                        <li><i class="fas fa-check"></i> 4GB RAM اختصاصی</li>
+                        <li><i class="fas fa-check"></i> 2TB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پشتیبانی VIP</li>
+                        <li><i class="fas fa-check"></i> DDOS Protection</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور SAMP حرفه‌ای', 300000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-name">سرور SAMP سازمانی</div>
+                    <div class="pricing-price">۵۰۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 1000 اسلات بازیکن</li>
+                        <li><i class="fas fa-check"></i> 8GB RAM اختصاصی</li>
+                        <li><i class="fas fa-check"></i> 5TB پهنای باند</li>
+                        <li><i class="fas fa-check"></i> پشتیبانی اختصاصی</li>
+                        <li><i class="fas fa-check"></i> حفاظت پیشرفته</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور SAMP سازمانی', 500000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Gaming Servers -->
+        <section id="gaming-page" class="service-page">
+            <button class="back-btn" onclick="showMain()">
+                <i class="fas fa-arrow-right"></i>
+                بازگشت به صفحه اصلی
+            </button>
+            
+            <div class="section-title">
+                <h2>سرور اختصاصی گیم</h2>
+                <p>سرورهای قدرتمند مخصوص بازی‌های آنلاین با عملکرد فوق‌العاده</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-name">گیمینگ پایه</div>
+                    <div class="pricing-price">۴۰۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 4 هسته CPU گیمینگ</li>
+                        <li><i class="fas fa-check"></i> 8GB RAM</li>
+                        <li><i class="fas fa-check"></i> 250GB SSD</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 50ms</li>
+                        <li><i class="fas fa-check"></i> بهینه‌شده برای گیم</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور گیمینگ پایه', 400000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-name">گیمینگ حرفه‌ای</div>
+                    <div class="pricing-price">۷۰۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 8 هسته CPU گیمینگ</li>
+                        <li><i class="fas fa-check"></i> 16GB RAM</li>
+                        <li><i class="fas fa-check"></i> 500GB NVMe</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 30ms</li>
+                        <li><i class="fas fa-check"></i> GPU مجازی</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور گیمینگ حرفه‌ای', 700000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-name">گیمینگ سازمانی</div>
+                    <div class="pricing-price">۱,۲۰۰,۰۰۰ تومان</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 16 هسته CPU گیمینگ</li>
+                        <li><i class="fas fa-check"></i> 32GB RAM</li>
+                        <li><i class="fas fa-check"></i> 1TB NVMe</li>
+                        <li><i class="fas fa-check"></i> پینگ زیر 20ms</li>
+                        <li><i class="fas fa-check"></i> GPU اختصاصی</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور گیمینگ سازمانی', 1200000)">
+                        <i class="fas fa-shopping-cart"></i>
+                        خرید سرور
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add other service pages similarly -->
+    </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Azadi RolePlay</h3>
-                    <p style="color: #bdc1c6; margin-bottom: 25px; line-height: 1.8;">بهترین تجربه نقش‌آفرینی در GTA V با جامعه‌ای فعال و مدیریت حرفه‌ای</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>لینک‌های سریع</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home"><i class="fas fa-chevron-left"></i> صفحه اصلی</a></li>
-                        <li><a href="#about"><i class="fas fa-chevron-left"></i> درباره سرور</a></li>
-                        <li><a href="#gallery"><i class="fas fa-chevron-left"></i> گالری</a></li>
-                        <li><a href="#shop"><i class="fas fa-chevron-left"></i> فروشگاه</a></li>
-                        <li><a href="#forum"><i class="fas fa-chevron-left"></i> انجمن</a></li>
-                        <li><a href="#download"><i class="fas fa-chevron-left"></i> دانلود</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>پشتیبانی</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-left"></i> قوانین سرور</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-left"></i> راهنمای شروع</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-left"></i> سوالات متداول</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-left"></i> گزارش باگ</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-left"></i> تماس با ما</a></li>
-                    </ul>
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>درباره DevCode</h3>
+                <p style="color: #94a3b8; line-height: 1.8; margin-bottom: 1.5rem;">
+                    ارائه‌دهنده خدمات حرفه‌ای هاستینگ و سرور با سال‌ها تجربه در زمینه میزبانی سرورهای بازی و برنامه‌های تحت وب. ما با کیفیت و پشتیبانی بی‌نظیر در خدمت شما هستیم.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://rubika.ir/MamadCartel"><i class="fab fa-r-project"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
-            <div class="copyright">
-                © 2023 Azadi RolePlay. All rights reserved.
+            
+            <div class="footer-column">
+                <h3>خدمات ما</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showService('vps')"><i class="fas fa-chevron-left"></i> سرور مجازی</a></li>
+                    <li><a href="#" onclick="showService('samp')"><i class="fas fa-chevron-left"></i> خدمات SAMP</a></li>
+                    <li><a href="#" onclick="showService('mta')"><i class="fas fa-chevron-left"></i> خدمات MTA</a></li>
+                    <li><a href="#" onclick="showService('gaming')"><i class="fas fa-chevron-left"></i> سرور گیمینگ</a></li>
+                    <li><a href="#" onclick="showService('teamspeak')"><i class="fas fa-chevron-left"></i> تیم اسپیک</a></li>
+                </ul>
             </div>
+            
+            <div class="footer-column">
+                <h3>تماس با ما</h3>
+                <ul class="footer-links">
+                    <li><a href="https://rubika.ir/MamadCartel"><i class="fab fa-r-project"></i> روبیکا: MamadCartel@</a></li>
+                    <li><a href="mailto:info@devcode.ir"><i class="fas fa-envelope"></i> ایمیل: info@devcode.ir</a></li>
+                    <li><a href="#" onclick="showService('ticket')"><i class="fas fa-ticket-alt"></i> سیستم تیکت پشتیبانی</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> تلفن: 021-12345678</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>تمامی حقوق برای DevCode محفوظ است - ۱۴۰۲</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Particles.js Configuration
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#1a73e8" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#1a73e8",
-                    opacity: 0.2,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" },
-                    resize: true
-                }
-            },
-            retina_detect: true
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        menuToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        menuOverlay.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
         });
 
-        // تغییر تعداد بازیکنان آنلاین هر 10 ثانیه
-        const playerCounts = [10, 12, 15, 13, 16, 19, 32, 21, 5, 6];
-        let currentIndex = 0;
-        const onlinePlayersElement = document.getElementById('online-players');
-        
-        function updatePlayerCount() {
-            onlinePlayersElement.textContent = playerCounts[currentIndex];
-            currentIndex = (currentIndex + 1) % playerCounts.length;
+        function hideMobileMenu() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
         }
-        
-        // تغییر اولیه
-        updatePlayerCount();
-        
-        // تنظیم تایمر برای تغییر هر 10 ثانیه
-        setInterval(updatePlayerCount, 10000);
-        
-        // انیمیشن اسکرول نرم برای لینک‌های ناوبری
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // هایلایت منوی فعال بر اساس اسکرول
+
+        // Header scroll effect
         window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
+            const header = document.getElementById('main-header');
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
+        });
+
+        // Auth Modal
+        const authModal = document.getElementById('authModal');
+        
+        function showAuthModal(tab) {
+            authModal.classList.add('active');
+            switchAuthTab(tab);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideAuthModal() {
+            authModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function switchAuthTab(tab) {
+            // Update tabs
+            document.querySelectorAll('.auth-tab').forEach(tabElement => {
+                tabElement.classList.remove('active');
+            });
+            document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
             
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-links a');
+            // Update forms
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(tab + 'Form').classList.add('active');
+        }
+        
+        // Handle form submissions
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('ورود با موفقیت انجام شد!');
+            hideAuthModal();
+        });
+        
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('ثبت نام با موفقیت انجام شد!');
+            hideAuthModal();
+        });
+
+        // Purchase Modal
+        const purchaseModal = document.getElementById('purchaseModal');
+        let currentBasePrice = 0;
+        
+        function showPurchaseModal(productName, basePrice) {
+            currentBasePrice = basePrice;
+            document.getElementById('purchaseTitle').textContent = `خرید ${productName}`;
+            document.getElementById('basePrice').textContent = formatPrice(basePrice);
+            updateTotalPrice();
+            purchaseModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hidePurchaseModal() {
+            purchaseModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function formatPrice(price) {
+            return price.toLocaleString('fa-IR') + ' تومان';
+        }
+        
+        function updateTotalPrice() {
+            const hddPrice = parseInt(document.getElementById('extraHDD').value) * 1000;
+            const ramPrice = parseInt(document.getElementById('extraRAM').value) * 20000;
+            const portPrice = parseInt(document.getElementById('dedicatedPort').value) * 100000;
             
-            let currentSection = '';
+            document.getElementById('hddPrice').textContent = formatPrice(hddPrice);
+            document.getElementById('ramPrice').textContent = formatPrice(ramPrice);
+            document.getElementById('portPrice').textContent = formatPrice(portPrice);
             
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if(scrollY >= (sectionTop - 150)) {
-                    currentSection = section.getAttribute('id');
-                }
+            const totalPrice = currentBasePrice + hddPrice + ramPrice + portPrice;
+            document.getElementById('totalPrice').textContent = formatPrice(totalPrice);
+        }
+        
+        // Add event listeners for price updates
+        document.getElementById('extraHDD').addEventListener('change', updateTotalPrice);
+        document.getElementById('extraRAM').addEventListener('change', updateTotalPrice);
+        document.getElementById('dedicatedPort').addEventListener('change', updateTotalPrice);
+        
+        // Handle purchase form submission
+        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('سفارش شما با موفقیت ثبت شد! همکاران ما به زودی با شما تماس خواهند گرفت.');
+            hidePurchaseModal();
+        });
+
+        // Service Pages Navigation
+        function showService(service) {
+            // Hide main content
+            document.getElementById('main-content').style.display = 'none';
+            
+            // Hide all service pages
+            const servicePages = document.querySelectorAll('.service-page');
+            servicePages.forEach(page => {
+                page.classList.remove('active');
             });
             
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if(link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
+            // Show selected service page
+            const selectedPage = document.getElementById(service + '-page');
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function showMain() {
+            // Show main content
+            document.getElementById('main-content').style.display = 'block';
+            
+            // Hide all service pages
+            const servicePages = document.querySelectorAll('.service-page');
+            servicePages.forEach(page => {
+                page.classList.remove('active');
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
         });
-        
-        // انیمیشن‌های ظاهر شدن المان‌ها هنگام اسکرول
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.fade-in').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(40px)';
-            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            observer.observe(el);
-        });
-        
-        // دانلود خودکار لانچر
-        document.getElementById('download-launcher').addEventListener('click', function() {
-            window.location.href = 'https://fh1.linklick.ir/23f4d96e878f914097bbaaa2928bc7b3.linklick.ir.zip';
-        });
+
+        // Initialize with login tab active
+        switchAuthTab('login');
     </script>
 </body>
 </html>
