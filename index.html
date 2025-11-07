@@ -3,1892 +3,1647 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevCode | خدمات حرفه‌ای سرور مجازی و میزبانی بازی</title>
+    <title>بازار معاملاتی رویال شاپ | خرید و فروش اکانت بازی و خدمات روبیکا</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2563eb;
-            --secondary: #06b6d4;
-            --accent: #8b5cf6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-            --gray: #1e293b;
-            --gray-light: #334155;
-            --gradient: linear-gradient(135deg, #2563eb, #8b5cf6);
-            --gradient2: linear-gradient(135deg, #06b6d4, #3b82f6);
-            --gradient3: linear-gradient(135deg, #10b981, #06b6d4);
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
-            --glow: 0 0 30px rgba(37, 99, 235, 0.3);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Vazirmatn', sans-serif;
         }
-        
+
+        :root {
+            --primary: #FFD700;
+            --primary-dark: #D4AF37;
+            --black: #000000;
+            --dark: #0A0A0A;
+            --darker: #111111;
+            --light: #1A1A1A;
+            --text: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --gradient: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+            --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFEC8B 100%);
+            --gradient-dark: linear-gradient(135deg, #000000 0%, #1A1A1A 100%);
+            --shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            --shadow-hover: 0 20px 50px rgba(255, 215, 0, 0.5);
+            --glow: 0 0 20px rgba(255, 215, 0, 0.6);
+            --glow-text: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
         body {
-            background: var(--dark);
-            color: var(--light);
-            line-height: 1.7;
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--black);
+            color: var(--text);
+            line-height: 1.6;
             overflow-x: hidden;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            background: var(--gradient-dark);
         }
-        
-        /* Header */
-        header {
-            background: rgba(15, 23, 42, 0.95);
-            padding: 1.2rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-        
-        header.scrolled {
-            padding: 0.8rem 2rem;
-            background: rgba(15, 23, 42, 0.98);
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 20px;
         }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.3s ease;
-        }
-        
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-        
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: var(--gradient);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--glow);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .logo-icon::before {
-            content: '';
-            position: absolute;
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
+            background: var(--black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
-        
-        .logo:hover .logo-icon::before {
-            transform: translateX(100%);
+
+        .loading-content {
+            text-align: center;
         }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+
+        .loading-logo {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
         }
-        
-        /* Menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .header-scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 0.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
         }
-        
-        .menu-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
+
+        .logo i {
+            color: var(--primary);
+            font-size: 2.2rem;
+            filter: var(--glow);
+            animation: logoGlow 3s infinite alternate;
         }
-        
-        .menu-toggle span {
-            width: 22px;
-            height: 2px;
-            background: var(--light);
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow-text);
         }
-        
+
         nav ul {
             display: flex;
             list-style: none;
             gap: 2.5rem;
         }
-        
+
         nav a {
-            color: var(--light);
+            color: var(--text);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 700;
             transition: all 0.3s ease;
             position: relative;
             padding: 0.5rem 0;
-            font-size: 0.95rem;
-            opacity: 0.9;
+            font-size: 1.1rem;
         }
-        
+
         nav a:hover {
-            color: var(--secondary);
-            opacity: 1;
+            color: var(--primary);
         }
-        
+
         nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
             right: 0;
             width: 0;
-            height: 2px;
-            background: var(--gradient);
+            height: 3px;
+            background: var(--gradient-gold);
             transition: width 0.3s ease;
             border-radius: 2px;
         }
-        
+
         nav a:hover::after {
             width: 100%;
         }
-        
-        .nav-btns {
+
+        .auth-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
         }
-        
-        .nav-btn {
-            background: var(--gradient);
-            color: white;
+
+        .btn {
+            padding: 0.9rem 1.8rem;
             border: none;
-            padding: 0.8rem 1.8rem;
             border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.4s ease;
+            font-family: inherit;
             position: relative;
             overflow: hidden;
-        }
-        
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .nav-btn:hover::before {
-            left: 100%;
-        }
-        
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-        }
-        
-        .nav-btn-outline {
-            background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--light);
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
-        }
-        
-        .nav-btn-outline:hover {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-        
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 320px;
-            height: 100vh;
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            transition: right 0.4s ease;
-            padding: 100px 2rem 2rem;
-            border-left: 1px solid var(--glass-border);
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        .mobile-menu.active {
-            right: 0;
-        }
-        
-        .mobile-menu ul {
-            list-style: none;
-        }
-        
-        .mobile-menu li {
-            margin-bottom: 1.2rem;
-        }
-        
-        .mobile-menu a {
-            color: var(--light);
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-        }
-        
-        .mobile-menu a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-5px);
-            color: var(--secondary);
-        }
-        
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(5px);
-        }
-        
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Auth Modal */
-        .auth-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            backdrop-filter: blur(10px);
-        }
-        
-        .auth-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .auth-content {
-            background: rgba(30, 41, 59, 0.95);
-            padding: 2.5rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 450px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(20px);
-            position: relative;
-        }
-        
-        .close-auth {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .close-auth:hover {
-            opacity: 1;
-        }
-        
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            background: var(--glass);
-            border-radius: 10px;
-            padding: 5px;
-        }
-        
-        .auth-tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .auth-tab.active {
-            background: var(--gradient);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-        
-        .auth-form {
-            display: none;
-        }
-        
-        .auth-form.active {
-            display: block;
-            animation: fadeInUp 0.4s ease;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 1rem 1.2rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: var(--light);
             font-size: 1rem;
-            transition: all 0.3s;
         }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: var(--black);
+            box-shadow: var(--shadow);
         }
-        
-        .auth-submit {
-            width: 100%;
-            padding: 1.2rem;
-            background: var(--gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 1rem;
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-hover);
         }
-        
-        .auth-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: var(--shadow);
         }
-        
+
+        .btn-secondary:hover {
+            background: rgba(255, 215, 0, 0.15);
+            transform: translateY(-3px);
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 0 2rem;
-            margin-top: 80px;
             position: relative;
             overflow: hidden;
-        }
-        
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
-            z-index: -1;
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
         }
-        
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .floating-element {
-            position: absolute;
-            background: var(--gradient);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .floating-element:nth-child(1) {
-            width: 120px;
-            height: 120px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        
-        .floating-element:nth-child(2) {
-            width: 80px;
-            height: 80px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-        
-        .floating-element:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-        
+
         .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            animation: fadeInUp 1s ease;
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            animation: heroEntrance 1.2s ease-out;
         }
-        
-        .hero h2 {
+
+        .hero h1 {
             font-size: 4rem;
-            margin-bottom: 1.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
+            font-weight: 900;
+            margin-bottom: 1.8rem;
             line-height: 1.1;
-            text-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
-            letter-spacing: -1px;
         }
-        
+
+        .hero h1 span {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow-text);
+            display: block;
+        }
+
         .hero p {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
             margin-bottom: 2.5rem;
-            color: rgba(255, 255, 255, 0.85);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
             line-height: 1.8;
-            font-weight: 300;
         }
-        
-        .hero-btns {
+
+        .hero-buttons {
             display: flex;
             gap: 1.5rem;
-            justify-content: center;
             flex-wrap: wrap;
-            margin-top: 3rem;
         }
-        
-        .btn {
-            padding: 1.3rem 2.8rem;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            position: relative;
-            overflow: hidden;
-            font-size: 1.1rem;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.6s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--secondary);
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--secondary);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.5);
-        }
-        
-        /* Services Grid */
-        .services {
-            padding: 6rem 2rem;
-            background: var(--darker);
-            position: relative;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-            position: relative;
-        }
-        
-        .section-title h2 {
-            font-size: 3rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        
-        .section-title p {
-            color: #94a3b8;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .service-card {
-            background: var(--gray);
-            border-radius: 16px;
-            padding: 3rem 2.5rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .service-card::before {
-            content: '';
+
+        /* Floating Elements */
+        .floating-elements {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: 0;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(37, 99, 235, 0.3);
-        }
-        
-        .service-card:hover::before {
-            opacity: 0.05;
-        }
-        
-        .service-icon {
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            position: relative;
+            pointer-events: none;
             z-index: 1;
         }
-        
-        .service-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1.5rem;
-            color: var(--light);
-            position: relative;
-            z-index: 1;
-            font-weight: 700;
-        }
-        
-        .service-card p {
-            color: #94a3b8;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Service Pages */
-        .service-page {
-            display: none;
-            padding: 120px 2rem 5rem;
-            min-height: 100vh;
-            background: var(--darker);
-        }
-        
-        .service-page.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .back-btn {
-            background: var(--gray);
-            color: var(--light);
-            border: 1px solid var(--glass-border);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-bottom: 3rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .back-btn:hover {
-            background: var(--glass);
-            transform: translateX(-5px);
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-        
-        .pricing-card {
-            background: var(--gray);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            border: 1px solid var(--glass-border);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .pricing-card::before {
-            content: '';
+
+        .floating-element {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: 0;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+            opacity: 0.08;
         }
-        
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(37, 99, 235, 0.3);
+
+        /* Quick Stats */
+        .quick-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
-        
-        .pricing-card:hover::before {
-            opacity: 0.05;
+
+        .stat-item {
+            text-align: center;
         }
-        
-        .location-badge {
-            background: var(--gradient);
-            color: white;
-            padding: 0.5rem 1.2rem;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .pricing-name {
-            font-size: 1.4rem;
-            color: var(--light);
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-            font-weight: 700;
-        }
-        
-        .pricing-price {
+
+        .stat-number {
             font-size: 2.5rem;
             font-weight: 800;
-            background: var(--gradient);
+            background: var(--gradient-gold);
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: var(--glow-text);
         }
-        
-        .pricing-features {
-            list-style: none;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .pricing-features li {
-            padding: 0.8rem 0;
-            color: #94a3b8;
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-        
-        .pricing-features li i {
-            color: var(--success);
+
+        .stat-text {
+            color: var(--text-secondary);
             font-size: 1.1rem;
+            font-weight: 600;
         }
-        
-        /* Purchase Modal */
-        .purchase-modal {
+
+        /* Modal Styles */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            backdrop-filter: blur(10px);
-            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            backdrop-filter: blur(15px);
+            animation: modalFadeIn 0.3s ease;
         }
-        
-        .purchase-modal.active {
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 3px solid var(--primary);
+            box-shadow: var(--shadow-hover);
+            max-width: 450px;
+            width: 90%;
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-shadow: var(--glow-text);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
         }
-        
-        .purchase-content {
-            background: rgba(30, 41, 59, 0.95);
-            padding: 3rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 800px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(20px);
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
+
+        .close-modal:hover {
+            color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+            transform: rotate(90deg);
         }
-        
-        .close-purchase {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .close-purchase:hover {
-            opacity: 1;
-        }
-        
-        .purchase-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-        
-        .purchase-header h3 {
-            font-size: 2rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .purchase-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-        
-        .form-column {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .form-group-full {
-            grid-column: 1 / -1;
-        }
-        
+
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+            margin-bottom: 1.5rem;
         }
-        
+
         .form-group label {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 1.1rem;
         }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 1rem 1.2rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-            color: var(--light);
+            background: var(--darker);
+            color: var(--text);
+            font-family: inherit;
+            transition: all 0.3s ease;
             font-size: 1rem;
-            transition: all 0.3s;
         }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+
+        .form-control:focus {
             outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            transform: scale(1.02);
         }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
         }
-        
-        .checkbox-group {
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+            text-shadow: var(--glow-text);
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 0;
+            background: var(--darker);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow-text);
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon i {
+            font-size: 2.5rem;
+            color: var(--black);
+        }
+
+        .feature-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Products */
+        .products {
+            padding: 6rem 0;
+            background: var(--black);
+            position: relative;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: var(--light);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) rotate(2deg) scale(1.03);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .product-image {
+            height: 220px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image i {
+            font-size: 4.5rem;
+            color: var(--black);
+            z-index: 2;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0,0,0,0.4));
+        }
+
+        .product-content {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .product-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-shadow: var(--glow-text);
+        }
+
+        /* Intermediaries */
+        .intermediaries {
+            padding: 6rem 0;
+            background: var(--darker);
+            position: relative;
+        }
+
+        .intermediaries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .intermediary-card {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .intermediary-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .intermediary-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intermediary-avatar i {
+            font-size: 2.5rem;
+            color: var(--black);
+            z-index: 2;
+        }
+
+        .intermediary-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0,0,0,0.2));
+        }
+
+        .intermediary-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .intermediary-info p {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .verified {
+            color: var(--primary);
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            margin-top: 0.5rem;
+            font-weight: 600;
         }
-        
-        .checkbox-group input {
-            width: auto;
+
+        /* Stats */
+        .stats {
+            padding: 5rem 0;
+            background: var(--black);
+            position: relative;
         }
-        
-        .purchase-summary {
-            background: var(--glass);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-            border: 1px solid var(--glass-border);
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+            text-align: center;
         }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--glass-border);
+
+        .stat-item {
+            padding: 2.5rem;
+            background: var(--light);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
         }
-        
-        .summary-item:last-child {
-            border-bottom: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--secondary);
+
+        .stat-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
         }
-        
-        .purchase-submit {
-            width: 100%;
-            padding: 1.3rem;
-            background: var(--gradient);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 700;
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: var(--glow-text);
+        }
+
+        .stat-text {
+            color: var(--text-secondary);
             font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 2rem;
+            font-weight: 600;
         }
-        
-        .purchase-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
-        }
-        
+
         /* Footer */
         footer {
             background: var(--darker);
-            padding: 4rem 2rem 2rem;
-            border-top: 1px solid var(--glass-border);
+            padding: 5rem 0 2rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 3.5rem;
+            margin-bottom: 3rem;
         }
-        
+
         .footer-column h3 {
-            color: var(--light);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
             font-weight: 700;
+            color: var(--primary);
+            text-shadow: var(--glow-text);
         }
-        
+
         .footer-links {
             list-style: none;
         }
-        
+
         .footer-links li {
             margin-bottom: 1rem;
         }
-        
+
         .footer-links a {
-            color: #94a3b8;
+            color: var(--text-secondary);
             text-decoration: none;
             transition: all 0.3s ease;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
         }
-        
+
         .footer-links a:hover {
-            color: var(--secondary);
-            transform: translateX(5px);
+            color: var(--primary);
+            transform: translateX(10px);
+            text-shadow: var(--glow-text);
         }
-        
+
         .social-links {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             margin-top: 1.5rem;
         }
-        
-        .social-links a {
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--light);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: var(--glass);
-            border-radius: 10px;
-            color: white;
-            transition: all 0.3s ease;
-            border: 1px solid var(--glass-border);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.3rem;
+            box-shadow: var(--shadow);
         }
-        
-        .social-links a:hover {
-            background: var(--gradient);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--black);
+            transform: translateY(-5px) rotate(15deg);
+            box-shadow: var(--shadow-hover);
         }
-        
+
         .copyright {
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--glass-border);
-            color: #64748b;
-            font-size: 0.9rem;
+            padding-top: 3rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
-        
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 2.5rem;
+            z-index: 1000;
+        }
+
+        .admin-btn {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            text-decoration: none;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.4s ease;
+            animation: adminPulse 3s infinite;
+            font-size: 1.5rem;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.2) rotate(180deg);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 1.2rem 2rem;
+            background: var(--gradient-gold);
+            color: var(--black);
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+            z-index: 3000;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+            font-weight: 700;
+            font-size: 1.1rem;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
         @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
+            from {
+                opacity: 0;
+                transform: translateY(40px);
             }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-        
+
+        @keyframes heroEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(60px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes logoGlow {
+            from {
+                filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+            }
+            to {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
+            }
+        }
+
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0px) rotate(360deg); }
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1200px) rotate(720deg);
+            }
         }
-        
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes adminPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: var(--shadow-hover);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-animate.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Responsive */
-        @media (max-width: 968px) {
-            .menu-toggle {
-                display: flex;
-            }
-            
-            nav ul {
-                display: none;
-            }
-            
-            .hero h2 {
-                font-size: 3rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-            
-            .purchase-form {
-                grid-template-columns: 1fr;
-            }
-        }
-        
         @media (max-width: 768px) {
             .header-container {
-                padding: 1rem;
-            }
-            
-            .hero {
-                padding: 0 1rem;
-            }
-            
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            
-            .btn {
-                padding: 1.1rem 2.2rem;
-            }
-            
-            .hero-btns {
                 flex-direction: column;
-                align-items: center;
+                gap: 1.5rem;
             }
-            
-            .services-grid {
+
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .features-grid,
+            .products-grid,
+            .intermediaries-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .pricing-grid {
-                grid-template-columns: 1fr;
+
+            .quick-stats {
+                gap: 2rem;
+                justify-content: center;
             }
-            
-            .auth-content,
-            .purchase-content {
-                padding: 2rem;
-                margin: 1rem;
+
+            .admin-panel {
+                bottom: 1.5rem;
+                left: 1.5rem;
+            }
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-crown"></i>
+            </div>
+            <div class="loading-text">بارگذاری رویال شاپ...</div>
+        </div>
+    </div>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements" id="floatingElements"></div>
+
     <!-- Header -->
-    <header id="main-header">
-        <div class="header-container">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-server" style="color: white; font-size: 1.3rem;"></i>
+    <header id="header">
+        <div class="container">
+            <div class="header-container">
+                <div class="logo" onclick="scrollToTop()">
+                    <i class="fas fa-crown"></i>
+                    <div class="logo-text">بازار معاملاتی رویال شاپ</div>
                 </div>
-                <h1>DevCode</h1>
-            </div>
-            
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <nav>
-                <ul class="desktop-nav">
-                    <li><a href="#home">خانه</a></li>
-                    <li><a href="#services">خدمات</a></li>
-                    <li><a href="#contact">تماس با ما</a></li>
-                </ul>
-            </nav>
-            
-            <div class="nav-btns">
-                <button class="nav-btn nav-btn-outline" onclick="showAuthModal('login')">ورود</button>
-                <button class="nav-btn" onclick="showAuthModal('register')">ثبت نام</button>
+                <nav>
+                    <ul>
+                        <li><a href="#home">خانه</a></li>
+                        <li><a href="#features">خدمات</a></li>
+                        <li><a href="#products">محصولات</a></li>
+                        <li><a href="#intermediaries">واسطه‌ها</a></li>
+                        <li><a href="#stats">آمار</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" id="loginBtn">ورود</button>
+                    <button class="btn btn-secondary" id="registerBtn">ثبت نام</button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Auth Modal -->
-    <div class="auth-modal" id="authModal">
-        <div class="auth-content">
-            <button class="close-auth" onclick="hideAuthModal()">&times;</button>
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">ورود</button>
-                <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">ثبت نام</button>
-            </div>
-            
-            <form class="auth-form active" id="loginForm">
-                <div class="form-group">
-                    <label for="loginEmail">ایمیل</label>
-                    <input type="email" id="loginEmail" placeholder="example@devcode.ir" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">رمز عبور</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="auth-submit">ورود به حساب</button>
-            </form>
-            
-            <form class="auth-form" id="registerForm">
-                <div class="form-group">
-                    <label for="registerName">نام کامل</label>
-                    <input type="text" id="registerName" placeholder="محمد محمدی" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerEmail">ایمیل</label>
-                    <input type="email" id="registerEmail" placeholder="example@devcode.ir" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerPassword">رمز عبور</label>
-                    <input type="password" id="registerPassword" placeholder="••••••••" required>
-                </div>
-                <div class="form-group">
-                    <label for="registerConfirmPassword">تکرار رمز عبور</label>
-                    <input type="password" id="registerConfirmPassword" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="auth-submit">ایجاد حساب</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Purchase Modal -->
-    <div class="purchase-modal" id="purchaseModal">
-        <div class="purchase-content">
-            <button class="close-purchase" onclick="hidePurchaseModal()">&times;</button>
-            <div class="purchase-header">
-                <h3 id="purchaseTitle">خرید سرور مجازی</h3>
-                <p style="color: #94a3b8;">لطفا اطلاعات خود را وارد کنید</p>
-            </div>
-            
-            <form id="purchaseForm">
-                <div class="purchase-form">
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label for="nationalCode">کد ملی</label>
-                            <input type="text" id="nationalCode" placeholder="0012345678" required maxlength="10">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phoneNumber">شماره تماس</label>
-                            <input type="tel" id="phoneNumber" placeholder="09123456789" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">ایمیل</label>
-                            <input type="email" id="email" placeholder="example@devcode.ir" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="postalCode">کد پستی</label>
-                            <input type="text" id="postalCode" placeholder="1234567890" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-column">
-                        <div class="form-group">
-                            <label for="usageType">مورد مصرف</label>
-                            <select id="usageType" required>
-                                <option value="">انتخاب کنید</option>
-                                <option value="web">وب‌سایت و برنامه‌نویسی</option>
-                                <option value="gaming">سرور بازی</option>
-                                <option value="storage">ذخیره‌سازی اطلاعات</option>
-                                <option value="development">توسعه و تست</option>
-                                <option value="other">سایر</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="serverLocation">موقعیت سرور</label>
-                            <select id="serverLocation" required>
-                                <option value="">انتخاب کنید</option>
-                                <option value="iran">ایران</option>
-                                <option value="germany">آلمان</option>
-                                <option value="sweden">سوئد</option>
-                                <option value="netherlands">هلند</option>
-                                <option value="usa">آمریکا</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="extraHDD">هارد اضافه</label>
-                            <select id="extraHDD">
-                                <option value="0">بدون هارد اضافه</option>
-                                <option value="50">+50GB (50,000 تومان)</option>
-                                <option value="100">+100GB (80,000 تومان)</option>
-                                <option value="200">+200GB (150,000 تومان)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="extraRAM">رم اضافه</label>
-                            <select id="extraRAM">
-                                <option value="0">بدون رم اضافه</option>
-                                <option value="2">+2GB (40,000 تومان)</option>
-                                <option value="4">+4GB (70,000 تومان)</option>
-                                <option value="8">+8GB (120,000 تومان)</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group-full">
-                        <label for="dedicatedPort">پورت اختصاصی</label>
-                        <select id="dedicatedPort">
-                            <option value="0">پورت استاندارد</option>
-                            <option value="1">پورت اختصاصی 1Gbps (100,000 تومان)</option>
-                            <option value="10">پورت اختصاصی 10Gbps (500,000 تومان)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group-full">
-                        <label for="additionalNotes">توضیحات اضافی</label>
-                        <textarea id="additionalNotes" placeholder="در صورت نیاز توضیحات بیشتری وارد کنید..."></textarea>
-                    </div>
-                </div>
-                
-                <div class="purchase-summary">
-                    <h4 style="color: var(--light); margin-bottom: 1rem; text-align: center;">خلاصه سفارش</h4>
-                    <div class="summary-item">
-                        <span>هزینه پایه:</span>
-                        <span id="basePrice">0 تومان</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>هارد اضافه:</span>
-                        <span id="hddPrice">0 تومان</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>رم اضافه:</span>
-                        <span id="ramPrice">0 تومان</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>پورت اختصاصی:</span>
-                        <span id="portPrice">0 تومان</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>جمع کل:</span>
-                        <span id="totalPrice">0 تومان</span>
-                    </div>
-                </div>
-                
-                <button type="submit" class="purchase-submit">
-                    <i class="fas fa-shopping-cart"></i>
-                    تکمیل خرید و پرداخت
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="#home" onclick="hideMobileMenu()"><i class="fas fa-home"></i> خانه</a></li>
-            <li><a href="#services" onclick="hideMobileMenu()"><i class="fas fa-concierge-bell"></i> خدمات</a></li>
-            <li><a href="#" onclick="showService('vps'); hideMobileMenu()"><i class="fas fa-cloud"></i> سرور مجازی</a></li>
-            <li><a href="#" onclick="showService('samp'); hideMobileMenu()"><i class="fas fa-gamepad"></i> خدمات SAMP</a></li>
-            <li><a href="#" onclick="showService('mta'); hideMobileMenu()"><i class="fas fa-car"></i> خدمات MTA</a></li>
-            <li><a href="#" onclick="showService('gaming'); hideMobileMenu()"><i class="fas fa-trophy"></i> سرور گیمینگ</a></li>
-            <li><a href="#" onclick="showService('teamspeak'); hideMobileMenu()"><i class="fas fa-headset"></i> تیم اسپیک</a></li>
-            <li><a href="#" onclick="showService('antiddos'); hideMobileMenu()"><i class="fas fa-shield-alt"></i> آنتی DDOS</a></li>
-            <li><a href="#" onclick="showService('ticket'); hideMobileMenu()"><i class="fas fa-ticket-alt"></i> تیکت پشتیبانی</a></li>
-            <li><a href="#contact" onclick="hideMobileMenu()"><i class="fas fa-phone"></i> تماس با ما</a></li>
-        </ul>
-    </div>
-    
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-bg"></div>
-            <div class="floating-elements">
-                <div class="floating-element"></div>
-                <div class="floating-element"></div>
-                <div class="floating-element"></div>
-            </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
             <div class="hero-content">
-                <h2>خدمات حرفه‌ای هاستینگ و سرور</h2>
-                <p>با زیرساخت قدرتمند و پشتیبانی 24/7، تجربه‌ای بی‌نظیر از میزبانی سرورهای بازی و برنامه‌های تحت وب داشته باشید. سرعت، امنیت و پایداری در بالاترین سطح.</p>
-                <div class="hero-btns">
-                    <a href="#services" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        مشاهده خدمات
-                    </a>
-                    <a href="#" onclick="showService('vps')" class="btn btn-secondary">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </a>
+                <h1>به <span>بازار معاملاتی رویال شاپ</span> خوش آمدید</h1>
+                <p>پلتفرم امن و مطمئن برای خرید و فروش اکانت‌های بازی، گیفت کارت و خدمات مرتبط با پیام‌رسان روبیکا. با واسطه‌های معتبر و تضمین 100% امنیت و کیفیت</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="joinRubika">پیوستن به روبیکا</button>
+                    <button class="btn btn-secondary">شروع معامله</button>
                 </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="services">
-            <div class="section-title">
-                <h2>خدمات ما</h2>
-                <p>خدمات متنوع و حرفه‌ای برای نیازهای مختلف شما</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card" onclick="showService('vps')">
-                    <div class="service-icon">
-                        <i class="fas fa-cloud"></i>
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">1500+</div>
+                        <div class="stat-text">معامله موفق</div>
                     </div>
-                    <h3>سرور مجازی (VPS)</h3>
-                    <p>سرورهای پرسرعت با سخت‌افزار قدرتمند برای میزبانی برنامه‌های تحت وب و اپلیکیشن‌ها</p>
-                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-text">رضایت کاربران</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-text">محصول فعال</div>
+                    </div>
                 </div>
-                
-                <div class="service-card" onclick="showService('samp')">
-                    <div class="service-icon">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدمات ویژه ما</h2>
+                <p>با اطمینان کامل و با بهترین کیفیت معامله کنید</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">
                         <i class="fas fa-gamepad"></i>
                     </div>
-                    <h3>خدمات SAMP</h3>
-                    <p>میزبانی تخصصی سرورهای San Andreas Multiplayer با کمترین پینگ و بالاترین پایداری</p>
-                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                    <h3>خرید و فروش اکانت کالاف</h3>
+                    <p>خرید و فروش اکانت‌های کالاف دیوتی با سطوح مختلف و آیتم‌های متنوع با تضمین کامل امنیت و پشتیبانی 24 ساعته</p>
                 </div>
-                
-                <div class="service-card" onclick="showService('mta')">
-                    <div class="service-icon">
-                        <i class="fas fa-car"></i>
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
                     </div>
-                    <h3>خدمات MTA</h3>
-                    <p>سرورهای Multi Theft Auto با امکانات کامل و پشتیبانی تخصصی برای جامعه بازی</p>
-                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                    <h3>خرید و فروش گپ و چنل روبیکا</h3>
+                    <p>معامله امن گپ‌ها و کانال‌های روبیکا با کاربران فعال و تضمین انتقال مالکیت و پشتیبانی دائمی</p>
                 </div>
-
-                <div class="service-card" onclick="showService('gaming')">
-                    <div class="service-icon">
-                        <i class="fas fa-trophy"></i>
+                <div class="feature-card scroll-animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
                     </div>
-                    <h3>سرور اختصاصی گیم</h3>
-                    <p>سرورهای قدرتمند مخصوص بازی‌های آنلاین با پینگ پایین و عملکرد فوق‌العاده</p>
-                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
+                    <h3>گیفت کارت و آیتم‌های بازی</h3>
+                    <p>خرید و فروش گیفت کارت‌های مختلف و آیتم‌های ارزشمند بازی‌های محبوب با بهترین قیمت بازار</p>
                 </div>
-
-                <div class="service-card" onclick="showService('teamspeak')">
-                    <div class="service-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>سرور تیم اسپیک</h3>
-                    <p>میزبانی سرورهای TeamSpeak با کیفیت صدای عالی برای تیم‌های گیمینگ</p>
-                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
-                </div>
-
-                <div class="service-card" onclick="showService('antiddos')">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>حفاظت آنتی DDOS</h3>
-                    <p>سیستم‌های پیشرفته حفاظت در برابر حملات سایبری با مانیتورینگ 24/7</p>
-                    <button class="btn btn-primary">مشاهده پلن‌ها</button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Service Pages -->
-    <div id="service-pages">
-        <!-- VPS Service -->
-        <section id="vps-page" class="service-page">
-            <button class="back-btn" onclick="showMain()">
-                <i class="fas fa-arrow-right"></i>
-                بازگشت به صفحه اصلی
-            </button>
-            
-            <div class="section-title">
-                <h2>سرور مجازی (VPS)</h2>
-                <p>سرورهای مجازی پرسرعت با سخت‌افزار قدرتمند در دیتاسنترهای مختلف</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="location-badge">ایران</div>
-                    <div class="pricing-name">پایه - ایران</div>
-                    <div class="pricing-price">۱۹۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 2 هسته CPU</li>
-                        <li><i class="fas fa-check"></i> 4GB RAM</li>
-                        <li><i class="fas fa-check"></i> 50GB NVMe</li>
-                        <li><i class="fas fa-check"></i> 1TB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 30ms</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی پایه - ایران', 190000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="location-badge">آلمان</div>
-                    <div class="pricing-name">حرفه‌ای - آلمان</div>
-                    <div class="pricing-price">۳۵۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 4 هسته CPU</li>
-                        <li><i class="fas fa-check"></i> 8GB RAM</li>
-                        <li><i class="fas fa-check"></i> 100GB NVMe</li>
-                        <li><i class="fas fa-check"></i> 2TB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 120ms</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی حرفه‌ای - آلمان', 350000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="location-badge">سوئد</div>
-                    <div class="pricing-name">سازمانی - سوئد</div>
-                    <div class="pricing-price">۵۵۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 8 هسته CPU</li>
-                        <li><i class="fas fa-check"></i> 16GB RAM</li>
-                        <li><i class="fas fa-check"></i> 200GB NVMe</li>
-                        <li><i class="fas fa-check"></i> 5TB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 150ms</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی سازمانی - سوئد', 550000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="location-badge">هلند</div>
-                    <div class="pricing-name">پیشرفته - هلند</div>
-                    <div class="pricing-price">۴۵۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 6 هسته CPU</li>
-                        <li><i class="fas fa-check"></i> 12GB RAM</li>
-                        <li><i class="fas fa-check"></i> 150GB NVMe</li>
-                        <li><i class="fas fa-check"></i> 3TB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 130ms</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور مجازی پیشرفته - هلند', 450000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SAMP Service -->
-        <section id="samp-page" class="service-page">
-            <button class="back-btn" onclick="showMain()">
-                <i class="fas fa-arrow-right"></i>
-                بازگشت به صفحه اصلی
-            </button>
-            
-            <div class="section-title">
-                <h2>خدمات سرور SAMP</h2>
-                <p>میزبانی تخصصی سرورهای San Andreas Multiplayer با بهترین کیفیت</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-name">سرور SAMP پایه</div>
-                    <div class="pricing-price">۱۰۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 50 اسلات بازیکن</li>
-                        <li><i class="fas fa-check"></i> 1GB RAM اختصاصی</li>
-                        <li><i class="fas fa-check"></i> 500GB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پشتیبانی 24/7</li>
-                        <li><i class="fas fa-check"></i> مدت: 1 ماهه</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور SAMP پایه', 100000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="pricing-name">سرور SAMP حرفه‌ای</div>
-                    <div class="pricing-price">۳۰۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 500 اسلات بازیکن</li>
-                        <li><i class="fas fa-check"></i> 4GB RAM اختصاصی</li>
-                        <li><i class="fas fa-check"></i> 2TB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پشتیبانی VIP</li>
-                        <li><i class="fas fa-check"></i> DDOS Protection</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور SAMP حرفه‌ای', 300000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="pricing-name">سرور SAMP سازمانی</div>
-                    <div class="pricing-price">۵۰۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 1000 اسلات بازیکن</li>
-                        <li><i class="fas fa-check"></i> 8GB RAM اختصاصی</li>
-                        <li><i class="fas fa-check"></i> 5TB پهنای باند</li>
-                        <li><i class="fas fa-check"></i> پشتیبانی اختصاصی</li>
-                        <li><i class="fas fa-check"></i> حفاظت پیشرفته</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور SAMP سازمانی', 500000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gaming Servers -->
-        <section id="gaming-page" class="service-page">
-            <button class="back-btn" onclick="showMain()">
-                <i class="fas fa-arrow-right"></i>
-                بازگشت به صفحه اصلی
-            </button>
-            
-            <div class="section-title">
-                <h2>سرور اختصاصی گیم</h2>
-                <p>سرورهای قدرتمند مخصوص بازی‌های آنلاین با عملکرد فوق‌العاده</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-name">گیمینگ پایه</div>
-                    <div class="pricing-price">۴۰۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 4 هسته CPU گیمینگ</li>
-                        <li><i class="fas fa-check"></i> 8GB RAM</li>
-                        <li><i class="fas fa-check"></i> 250GB SSD</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 50ms</li>
-                        <li><i class="fas fa-check"></i> بهینه‌شده برای گیم</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور گیمینگ پایه', 400000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="pricing-name">گیمینگ حرفه‌ای</div>
-                    <div class="pricing-price">۷۰۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 8 هسته CPU گیمینگ</li>
-                        <li><i class="fas fa-check"></i> 16GB RAM</li>
-                        <li><i class="fas fa-check"></i> 500GB NVMe</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 30ms</li>
-                        <li><i class="fas fa-check"></i> GPU مجازی</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور گیمینگ حرفه‌ای', 700000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-
-                <div class="pricing-card">
-                    <div class="pricing-name">گیمینگ سازمانی</div>
-                    <div class="pricing-price">۱,۲۰۰,۰۰۰ تومان</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 16 هسته CPU گیمینگ</li>
-                        <li><i class="fas fa-check"></i> 32GB RAM</li>
-                        <li><i class="fas fa-check"></i> 1TB NVMe</li>
-                        <li><i class="fas fa-check"></i> پینگ زیر 20ms</li>
-                        <li><i class="fas fa-check"></i> GPU اختصاصی</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="showPurchaseModal('سرور گیمینگ سازمانی', 1200000)">
-                        <i class="fas fa-shopping-cart"></i>
-                        خرید سرور
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Add other service pages similarly -->
-    </div>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>درباره DevCode</h3>
-                <p style="color: #94a3b8; line-height: 1.8; margin-bottom: 1.5rem;">
-                    ارائه‌دهنده خدمات حرفه‌ای هاستینگ و سرور با سال‌ها تجربه در زمینه میزبانی سرورهای بازی و برنامه‌های تحت وب. ما با کیفیت و پشتیبانی بی‌نظیر در خدمت شما هستیم.
-                </p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="https://rubika.ir/MamadCartel"><i class="fab fa-r-project"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-column">
-                <h3>خدمات ما</h3>
-                <ul class="footer-links">
-                    <li><a href="#" onclick="showService('vps')"><i class="fas fa-chevron-left"></i> سرور مجازی</a></li>
-                    <li><a href="#" onclick="showService('samp')"><i class="fas fa-chevron-left"></i> خدمات SAMP</a></li>
-                    <li><a href="#" onclick="showService('mta')"><i class="fas fa-chevron-left"></i> خدمات MTA</a></li>
-                    <li><a href="#" onclick="showService('gaming')"><i class="fas fa-chevron-left"></i> سرور گیمینگ</a></li>
-                    <li><a href="#" onclick="showService('teamspeak')"><i class="fas fa-chevron-left"></i> تیم اسپیک</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>تماس با ما</h3>
-                <ul class="footer-links">
-                    <li><a href="https://rubika.ir/MamadCartel"><i class="fab fa-r-project"></i> روبیکا: MamadCartel@</a></li>
-                    <li><a href="mailto:info@devcode.ir"><i class="fas fa-envelope"></i> ایمیل: info@devcode.ir</a></li>
-                    <li><a href="#" onclick="showService('ticket')"><i class="fas fa-ticket-alt"></i> سیستم تیکت پشتیبانی</a></li>
-                    <li><a href="#"><i class="fas fa-phone"></i> تلفن: 021-12345678</a></li>
-                </ul>
             </div>
         </div>
-        <div class="copyright">
-            <p>تمامی حقوق برای DevCode محفوظ است - ۱۴۰۲</p>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>محصولات پرفروش</h2>
+                <p>برترین محصولات با بهترین قیمت و کیفیت تضمین شده</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card scroll-animate">
+                    <div class="product-image">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="product-content">
+                        <h3>اکانت کالاف دیوتی لجندری</h3>
+                        <p>اکانت اورجینال کالاف دیوتی با آیتم‌های نایاب و اسلحه‌های افسانه‌ای سطح لجندری</p>
+                        <div class="product-price">1,500,000 تومان</div>
+                        <button class="btn btn-primary">خرید آنلاین</button>
+                    </div>
+                </div>
+                <div class="product-card scroll-animate">
+                    <div class="product-image">
+                        <i class="fas fa-ghost"></i>
+                    </div>
+                    <div class="product-content">
+                        <h3>GM Free Fire 1000</h3>
+                        <p>گیفت کارت و آیتم‌های بازی فری فایر با تخفیف‌های ویژه و تحویل فوری</p>
+                        <div class="product-price">200,000 تومان</div>
+                        <button class="btn btn-primary">خرید آنلاین</button>
+                    </div>
+                </div>
+                <div class="product-card scroll-animate">
+                    <div class="product-image">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <div class="product-content">
+                        <h3>UC Pubg 6000</h3>
+                        <p>خرید یونیورس کوین بازی پابجی با بهترین قیمت و تحویل فوری در کمتر از 5 دقیقه</p>
+                        <div class="product-price">450,000 تومان</div>
+                        <button class="btn btn-primary">خرید آنلاین</button>
+                    </div>
+                </div>
+                <div class="product-card scroll-animate">
+                    <div class="product-image">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <div class="product-content">
+                        <h3>کانال روبیکا 10K</h3>
+                        <p>خرید و فروش کانال‌های روبیکا با 10,000 ممبر فعال و واقعی با تضمین کامل</p>
+                        <div class="product-price">2,500,000 تومان</div>
+                        <button class="btn btn-primary">خرید آنلاین</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intermediaries Section -->
+    <section class="intermediaries" id="intermediaries">
+        <div class="container">
+            <div class="section-title">
+                <h2>واسطه‌های معتبر</h2>
+                <p>با خیال راحت و با واسطه‌های تایید شده معامله کنید</p>
+            </div>
+            <div class="intermediaries-grid">
+                <div class="intermediary-card scroll-animate">
+                    <div class="intermediary-avatar">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="intermediary-info">
+                        <h3>Tavus</h3>
+                        <p>Community Owner</p>
+                        <div class="verified">
+                            <i class="fas fa-check-circle"></i>
+                            فول احراز هویت
+                        </div>
+                    </div>
+                </div>
+                <div class="intermediary-card scroll-animate">
+                    <div class="intermediary-avatar">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="intermediary-info">
+                        <h3>Winzer</h3>
+                        <p>Vasete Rubika</p>
+                        <div class="verified">
+                            <i class="fas fa-check-circle"></i>
+                            فول احراز هویت
+                        </div>
+                    </div>
+                </div>
+                <div class="intermediary-card scroll-animate">
+                    <div class="intermediary-avatar">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="intermediary-info">
+                        <h3>Salar</h3>
+                        <p>Vasete Call Of Duty</p>
+                        <div class="verified">
+                            <i class="fas fa-check-circle"></i>
+                            فول احراز هویت
+                        </div>
+                    </div>
+                </div>
+                <div class="intermediary-card scroll-animate">
+                    <div class="intermediary-avatar">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="intermediary-info">
+                        <h3>Caspian Aboli</h3>
+                        <p>Vasete Call Of Duty</p>
+                        <div class="verified">
+                            <i class="fas fa-check-circle"></i>
+                            فول احراز هویت
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <div class="section-title">
+                <h2>آمار و ارقام</h2>
+                <p>گواهی بر کیفیت و اعتبار ما</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item scroll-animate">
+                    <div class="stat-number" data-count="1500">0</div>
+                    <div class="stat-text">معامله موفق</div>
+                </div>
+                <div class="stat-item scroll-animate">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-text">رضایت کاربران</div>
+                </div>
+                <div class="stat-item scroll-animate">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-text">محصول فعال</div>
+                </div>
+                <div class="stat-item scroll-animate">
+                    <div class="stat-number" data-count="24">0</div>
+                    <div class="stat-text">پشتیبانی</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>درباره ما</h3>
+                    <p>بازار معاملاتی رویال شاپ با سال‌ها تجربه در زمینه خرید و فروش اکانت‌های بازی و خدمات مرتبط، محیطی امن و مطمئن برای کاربران فراهم کرده است.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" id="rubikaSocial"><i class="fab fa-rubika"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>لینک‌های مفید</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-home"></i> خانه</a></li>
+                        <li><a href="#features"><i class="fas fa-cog"></i> خدمات</a></li>
+                        <li><a href="#products"><i class="fas fa-shopping-bag"></i> محصولات</a></li>
+                        <li><a href="#intermediaries"><i class="fas fa-users"></i> واسطه‌ها</a></li>
+                        <li><a href="#stats"><i class="fas fa-chart-bar"></i> آمار</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>تماس با ما</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-user"></i> @ID_TAVUS | اونر</a></li>
+                        <li><a href="#"><i class="fas fa-hashtag"></i> @BAZAR_ROYAL_SHOP | چنل</a></li>
+                        <li><a href="#" id="rubikaLink"><i class="fas fa-link"></i> گپ معاملات روبیکا</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> ۰۹۱۲۳۴۵۶۷۸۹</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@royalshop.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>کلیه حقوق این سایت متعلق به بازار معاملاتی رویال شاپ می‌باشد. © ۱۴۰۳</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Admin Panel -->
+    <div class="admin-panel">
+        <a href="#" class="admin-btn" id="adminToggle">
+            <i class="fas fa-cog"></i>
+        </a>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>ورود به حساب کاربری</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">نام کاربری یا ایمیل</label>
+                    <input type="text" id="loginUsername" class="form-control" placeholder="نام کاربری یا ایمیل خود را وارد کنید" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">رمز عبور</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="رمز عبور خود را وارد کنید" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">ورود به حساب</button>
+                <div class="form-footer">
+                    <a href="#" id="forgotPassword">رمز عبور خود را فراموش کرده‌اید؟</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>ثبت نام در رویال شاپ</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">نام کاربری</label>
+                    <input type="text" id="registerUsername" class="form-control" placeholder="نام کاربری خود را وارد کنید" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">ایمیل</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="ایمیل خود را وارد کنید" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">رمز عبور</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="رمز عبور خود را وارد کنید" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">تکرار رمز عبور</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="رمز عبور خود را مجدداً وارد کنید" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">ایجاد حساب کاربری</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>ورود به پنل مدیریت</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label for="adminUsername">نام کاربری</label>
+                    <input type="text" id="adminUsername" class="form-control" placeholder="نام کاربری مدیریت" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">رمز عبور</label>
+                    <input type="password" id="adminPassword" class="form-control" placeholder="رمز عبور مدیریت" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">ورود به پنل مدیریت</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Mobile Menu
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-        
-        menuToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        menuOverlay.addEventListener('click', function() {
-            mobileMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = '';
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 1500);
         });
 
-        function hideMobileMenu() {
-            mobileMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = '';
+        // Initialize particles
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 1000 } },
+                color: { value: "#FFD700" },
+                shape: { type: "circle" },
+                opacity: { value: 0.6, random: true },
+                size: { value: 4, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#FFD700",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 3,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        // Create floating elements
+        const floatingContainer = document.getElementById('floatingElements');
+        for (let i = 0; i < 20; i++) {
+            const element = document.createElement('div');
+            element.classList.add('floating-element');
+            const size = Math.random() * 120 + 30;
+            element.style.width = `${size}px`;
+            element.style.height = `${size}px`;
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.animationDuration = `${Math.random() * 40 + 20}s`;
+            element.style.animationDelay = `${Math.random() * 10}s`;
+            floatingContainer.appendChild(element);
         }
+
+        // Modal functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const adminToggle = document.getElementById('adminToggle');
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const adminModal = document.getElementById('adminModal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        const notification = document.getElementById('notification');
+
+        function showNotification(message, isSuccess = true) {
+            notification.textContent = message;
+            notification.style.background = isSuccess ? 'var(--gradient-gold)' : '#ff4444';
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Ripple effect for buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = button.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+
+            button.appendChild(circle);
+        }
+
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'block';
+        });
+
+        adminToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            adminModal.style.display = 'block';
+        });
+
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'none';
+                adminModal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) loginModal.style.display = 'none';
+            if (e.target === registerModal) registerModal.style.display = 'none';
+            if (e.target === adminModal) adminModal.style.display = 'none';
+        });
+
+        // Form submissions
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showNotification('ورود موفقیت‌آمیز بود! به حساب کاربری خود خوش آمدید.');
+            loginModal.style.display = 'none';
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showNotification('رمز عبور و تکرار آن مطابقت ندارند!', false);
+                return;
+            }
+            
+            showNotification('ثبت نام موفقیت‌آمیز بود! لطفاً ایمیل خود را تأیید کنید.');
+            registerModal.style.display = 'none';
+        });
+
+        document.getElementById('adminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (username === 'Tavus' && password === 'LKPGK00') {
+                showNotification('ورود موفقیت‌آمیز! به پنل مدیریت منتقل می‌شوید.');
+                adminModal.style.display = 'none';
+            } else {
+                showNotification('نام کاربری یا رمز عبور اشتباه است!', false);
+            }
+        });
+
+        // Rubika integration
+        document.getElementById('joinRubika').addEventListener('click', () => {
+            window.open('https://rubika.ir/joinc/DGBAFCEC0BMVJGSGGMNRLEYNDOTWQTTM', '_blank');
+            showNotification('در حال انتقال به گپ معاملات روبیکا...');
+        });
+
+        document.getElementById('rubikaLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('https://rubika.ir/joinc/DGBAFCEC0BMVJGSGGMNRLEYNDOTWQTTM', '_blank');
+            showNotification('در حال انتقال به گپ معاملات روبیکا...');
+        });
+
+        document.getElementById('rubikaSocial').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('https://rubika.ir/joinc/DGBAFCEC0BMVJGSGGMNRLEYNDOTWQTTM', '_blank');
+            showNotification('در حال انتقال به روبیکا...');
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
 
         // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
             } else {
-                header.classList.remove('scrolled');
+                header.classList.remove('header-scrolled');
             }
         });
 
-        // Auth Modal
-        const authModal = document.getElementById('authModal');
-        
-        function showAuthModal(tab) {
-            authModal.classList.add('active');
-            switchAuthTab(tab);
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function hideAuthModal() {
-            authModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        function switchAuthTab(tab) {
-            // Update tabs
-            document.querySelectorAll('.auth-tab').forEach(tabElement => {
-                tabElement.classList.remove('active');
+        // Stats counter animation
+        const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target;
+                    const target = parseInt(statNumber.getAttribute('data-count'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        statNumber.textContent = Math.floor(current);
+                    }, 16);
+                    
+                    statsObserver.unobserve(statNumber);
+                }
             });
-            document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
-            
-            // Update forms
-            document.querySelectorAll('.auth-form').forEach(form => {
-                form.classList.remove('active');
-            });
-            document.getElementById(tab + 'Form').classList.add('active');
-        }
-        
-        // Handle form submissions
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('ورود با موفقیت انجام شد!');
-            hideAuthModal();
-        });
-        
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('ثبت نام با موفقیت انجام شد!');
-            hideAuthModal();
+        }, observerOptions);
+
+        statNumbers.forEach(stat => {
+            statsObserver.observe(stat);
         });
 
-        // Purchase Modal
-        const purchaseModal = document.getElementById('purchaseModal');
-        let currentBasePrice = 0;
-        
-        function showPurchaseModal(productName, basePrice) {
-            currentBasePrice = basePrice;
-            document.getElementById('purchaseTitle').textContent = `خرید ${productName}`;
-            document.getElementById('basePrice').textContent = formatPrice(basePrice);
-            updateTotalPrice();
-            purchaseModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function hidePurchaseModal() {
-            purchaseModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        function formatPrice(price) {
-            return price.toLocaleString('fa-IR') + ' تومان';
-        }
-        
-        function updateTotalPrice() {
-            const hddPrice = parseInt(document.getElementById('extraHDD').value) * 1000;
-            const ramPrice = parseInt(document.getElementById('extraRAM').value) * 20000;
-            const portPrice = parseInt(document.getElementById('dedicatedPort').value) * 100000;
-            
-            document.getElementById('hddPrice').textContent = formatPrice(hddPrice);
-            document.getElementById('ramPrice').textContent = formatPrice(ramPrice);
-            document.getElementById('portPrice').textContent = formatPrice(portPrice);
-            
-            const totalPrice = currentBasePrice + hddPrice + ramPrice + portPrice;
-            document.getElementById('totalPrice').textContent = formatPrice(totalPrice);
-        }
-        
-        // Add event listeners for price updates
-        document.getElementById('extraHDD').addEventListener('change', updateTotalPrice);
-        document.getElementById('extraRAM').addEventListener('change', updateTotalPrice);
-        document.getElementById('dedicatedPort').addEventListener('change', updateTotalPrice);
-        
-        // Handle purchase form submission
-        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+        // Forgot password
+        document.getElementById('forgotPassword').addEventListener('click', (e) => {
             e.preventDefault();
-            alert('سفارش شما با موفقیت ثبت شد! همکاران ما به زودی با شما تماس خواهند گرفت.');
-            hidePurchaseModal();
+            showNotification('لینک بازیابی رمز عبور به ایمیل شما ارسال شد.');
         });
 
-        // Service Pages Navigation
-        function showService(service) {
-            // Hide main content
-            document.getElementById('main-content').style.display = 'none';
-            
-            // Hide all service pages
-            const servicePages = document.querySelectorAll('.service-page');
-            servicePages.forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected service page
-            const selectedPage = document.getElementById(service + '-page');
-            if (selectedPage) {
-                selectedPage.classList.add('active');
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        function showMain() {
-            // Show main content
-            document.getElementById('main-content').style.display = 'block';
-            
-            // Hide all service pages
-            const servicePages = document.querySelectorAll('.service-page');
-            servicePages.forEach(page => {
-                page.classList.remove('active');
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         }
 
-        // Smooth scrolling
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1901,9 +1656,6 @@
                 }
             });
         });
-
-        // Initialize with login tab active
-        switchAuthTab('login');
     </script>
 </body>
 </html>
